@@ -231,11 +231,11 @@
 
     // // Foreach con array
 
-    // $colores = ["rojo", "azul", "verde"];
+    $colores = ["rojo", "azul", "verde"];
 
-    // foreach($colores as $color) {
-    //     echo "El color es: ".$color."<br>";
-    // }
+    foreach($colores as $color) {
+        echo "El color es: ".$color."<br>";
+    }
 
     // // Foreach con array asociativo
 
@@ -302,11 +302,10 @@
 
     // echo "La suma de 2 y 3 es: ".sumar(2, 3)."<br>";
 
-    // // Funciones habituales de PHP
+    // // Funciones habituales de PHP- Nativas PHP
 
-    // // TEXTO
-
-    // strlen(), sirve para saber la longitud de un string
+    // // TEXTO 
+    // strlen(), sirve para saber la longitud de un "string" (cadena de texto)
 
     // $texto = "Hola mundo";
 
@@ -336,16 +335,25 @@
 
     // echo "El texto reemplazado es: ".str_replace("o", "x", $texto)."<br>";
 
-    // // COMPROBACIÓN DE VARIABLES
+    // str_pad, sirve para rellenar un string con un string de una longitud determinada
 
-    // // isset(), sirve para saber si una variable esta definida
+    // $number = "4";
+    // $number = str_pad($number, 3, '0', STR_PAD_LEFT); 
+
+    // echo "El numero es: ".$number."<br>";   
+
+    // // COMPROBACIÓN DE VARIABLES. comprobar si la variable existe y si tiene un valor
+
+    // // isset(), sirve para saber si una variable esta definida. Coniente comprobalr si la variable existe antes de iniciar bucle
 
     // $variable = "";
 
     // if(isset($variable)) {
     //     echo "La variable existe<br>";
+        // echo isset ($variable); --> devuelve true o false (0 o 1)
     // } else {
     //     echo "La variable no existe<br>";
+            //echo isset ($variable);
     // }
 
     // // empty(), sirve para saber si una variable esta vacia
@@ -488,11 +496,11 @@
 
     // // date(), sirve para obtener la fecha actual
 
-    // echo "La fecha es: ".date("d/m/Y")."<br>";
+    // echo "La fecha es: ".date("d/m/Y")."<br>"; se pueden poner /, - o seleccionar solo dia, mes, año
 
-    // // time(), sirve para obtener la hora actual
+    // // time(), sirve para obtener la hora actual m
 
-    // echo "La hora es: ".date("H:i:s")."<br>";
+    // echo "La hora es: ".time()."<br>";
 
     // // mktime(), sirve para crear una fecha a partir de una fecha y una hora
 
@@ -535,7 +543,7 @@
     // fclose($fichero);
 
     // // file_put_contents(), sirve para escribir en un fichero sin necesidad de
-    // // abrirlo previamente
+    // // abrirlo previamente--> realiza las tres cosas anteriores
 
     // file_put_contents("fichero.txt", "Hola mundo");
 
@@ -543,7 +551,7 @@
 
     // $texto = "Esto es un ejemplo de texto";
 
-    // file_put_contents("fichero.txt", $texto."\n", FILE_APPEND);
+    // file_put_contents("fichero.txt", $texto."\n", FILE_APPEND); (/n es un salto de linea)- sirve para registrar errores de la web
 
     // // file_get_contents(), sirve para leer un fichero
 
@@ -587,7 +595,7 @@
     //     echo "El fichero no es legible<br>";
     // }
 
-    // // is_writable(), sirve para saber si un fichero es escribible
+    // // is_writable(), sirve para saber si un fichero es editable
 
     // if(is_writable("fichero.txt")) {
     //     echo "El fichero es escribible<br>";
@@ -603,7 +611,7 @@
     //     echo "El fichero no es ejecutable<br>";
     // }
 
-    // // EJEMPLO DE SCRAPING
+    // // EJEMPLO DE SCRAPING (coger datos de la web)
 
     // $ch = curl_init();
 
