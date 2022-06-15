@@ -32,7 +32,7 @@
 
     // echo $numero;
 
-    // // Condicional if, elseif, else
+    // Condicional if, elseif, else
 
     // $color  = "azul";
 
@@ -231,11 +231,11 @@
 
     // // Foreach con array
 
-    $colores = ["rojo", "azul", "verde"];
+    // $colores = ["rojo", "azul", "verde"];
 
-    foreach($colores as $color) {
-        echo "El color es: ".$color."<br>";
-    }
+    // foreach($colores as $color) {
+    //     echo "El color es: ".$color."<br>";
+    // }
 
     // // Foreach con array asociativo
 
