@@ -5,18 +5,17 @@
 // 2º Si hay ticket creado hoy, por lo que tengo que añadir uno nuevo con fecha de hoy empieza por el último ticket creado +1 
 // Crear una funcion en la que se cree un ticket del mismo dia y de otro día. Generar 1 ticket 
 
-$tickets = ['2205290001', '2205290002', '2205290003']
 
+$tickets = ['2205290001', '2205290002', '2205290003', '2205290004'];
 
-    if($tickets == "2205290003"){
-        echo $tickets++1
-    }elseif($tickets == ""){
-        echo "El color es azul";    
+function numero_ventas($tickets){;
+
+    if(strpos(end($tickets), date('ymd')) !== false){
+        return end($tickets) + 1;
     } else {
-        echo "El color no es rojo";
+        return date('ymd').'0001';
     }
+};
 
-    foreach($tickets as $ticket) {
-      echo "El nuevo ticket de hoy es".$ticket
-  }
-?>
+echo numero_ventas($tickets);
+
