@@ -2,33 +2,21 @@
 
 namespace app\Controllers;
 
+require_once 'app/Models/Table.php';
+
+use app\Models\Table;
+
 class TableController {
 
-	protected $saludo;
+	protected $table;
 
 	public function __construct(){  
 
-		$this->saludo = $saludo;
+		$this->table = new Table();
 	}
 
 	public function index(){
-
-        $mesas = [
-            "1" => [
-                "numero" => "1",
-                "estado" => "1"
-            ],
-            "2" => [
-                "numero" => "2",
-                "estado" => "0"
-            ],
-            "3" => [
-                "numero" => "3",
-                "estado" => "1"
-            ]
-        ];
-
-        return $mesas;
+		return $this->table->index();
 	}
 }
 
