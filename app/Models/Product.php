@@ -6,11 +6,11 @@ require_once 'core/Connection.php';
 use PDO;
 use core\Connection;
 
-class Table extends Connection 
+class Product extends Connection 
 {
-	public function index(){
-		
-        $query =  "SELECT * FROM mesas WHERE activo = 1";
+	public function index($categoria){
+        
+        $query =  "SELECT * FROM productos WHERE productos.activo= 1 AND categoria_id= $categoria";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
