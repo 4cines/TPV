@@ -5,55 +5,36 @@
 	use app\Controllers\TicketController;
 
 	$ticket = new TicketController();
-	$tikets = $tiket->index();
+    $precios_bi = new TicketController();
+
+    if(isset($_GET['mesa'])){
+        $tickets = $ticket->index($_GET['mesa']);
+    }
+    else{ 
+    };
+
+    if(isset($_GET['producto'])){
+        $precios_bi = $precio_bi->index($_GET['producto']);
+    }
+    else{ 
+    };
 
 ?>
 <div class="col-12 col-lg-5 col-xl-4 mt-5">
     <aside>
         <h2 class="text-center">TICKET MESA 1</h2>
         <ul class="list-group shadow mt-4">
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/cocacola.png">
-                <div class="flex-grow-1"><span class="categoria-prod">Refrescos</span>
-                    <h4 class="nombre-prod mb-0">Coca-Cola</h4><span class="medida-prod">20 ml.</span>
-                </div>
-                <p class="precio-prod">2.70 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/heineken.jpeg">
-                <div class="flex-grow-1"><span class="categoria-prod">Bebida alcohólica</span>
-                    <h4 class="nombre-prod mb-0">Cerveza Heineken</h4><span class="medida-prod">33 ml.</span>
-                </div>
-                <p class="precio-prod">3.50 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/nestea.jpeg">
-                <div class="flex-grow-1"><span class="categoria-prod">Refrescos</span>
-                    <h4 class="nombre-prod mb-0">Nestea</h4><span class="medida-prod">33 ml.</span>
-                </div>
-                <p class="precio-prod">2.90 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/patatilla-jamon.jpeg">
-                <div class="flex-grow-1"><span class="categoria-prod">Aperitivos</span>
-                    <h4 class="nombre-prod mb-0">Bolsa patatilla sabor jamón</h4><span class="medida-prod">150 gr.</span>
-                </div>
-                <p class="precio-prod">3.00 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/copa-vino.jpeg">
-                <div class="flex-grow-1"><span class="categoria-prod">Bebida alcohólica</span>
-                    <h4 class="nombre-prod mb-0">Copa de vino</h4><span class="medida-prod">20 ml.</span>
-                </div>
-                <p class="precio-prod">4.50 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket shadow-sm" src="assets/img/cocacola.png">
-                <div class="flex-grow-1"><span class="categoria-prod">Refrescos</span>
-                    <h4 class="nombre-prod mb-0">Coca-Cola</h4><span class="medida-prod">20 ml.</span>
-                </div>
-                <p class="precio-prod">3.50 €</p>
-            </li>
-            <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="assets/img/cafe-con-leche.jpeg">
-                <div class="flex-grow-1"><span class="categoria-prod">Bebida caliente</span>
-                    <h4 class="nombre-prod mb-0">Café con leche</h4><span class="medida-prod">25 ml.</span>
-                </div>
-                <p class="precio-prod">2.10 €</p>
-            </li>
+        <?php if (isset($tickets)):?>
+            <?php foreach($tickets as $ticket):?>
+                    <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
+                        <div class="flex-grow-1"><span class="categoria-prod"><?= $ticket['categoria'];?></span>
+                            <h4 class="nombre-prod mb-0"><?= $ticket['nombre'];?></h4>
+                        </div>
+                        <p class="precio-prod"><?= $ticket['precio_base']?>€</p>
+                    </li>   
+            <?php endforeach;?> 
+        <?php else:?>    
+        <?php endif;?>  
         </ul>
         <div class="row mt-3">
             <div class="col">
@@ -71,7 +52,13 @@
                     </div>
                     <div class="row justify-content-between g-0">
                         <div class="col">
-                            <h5 class="text-center text-white mb-0 pb-1">74.30 €</h5>
+                            <?php if (isset($tickets)):?>
+                                <?php foreach($preciosbase as $preciobase):?>
+                                <h5 class="text-center text-white mb-0 pb-1"><?=$preciobase['SUM(tickets.precio_id)'];?></h5>
+                                <?php endforeach;?> 
+                            <?php else:?>  
+                            <?php endif;?>  
+                            </div>   
                         </div>
                         <div class="col">
                             <h5 class="text-center text-white mb-0 border-start pb-1">21%</h5>
