@@ -5,24 +5,22 @@
 	use app\Controllers\TicketController;
 
 	$ticket = new TicketController();
-    $precios_bi = new TicketController();
 
     if(isset($_GET['mesa'])){
         $tickets = $ticket->index($_GET['mesa']);
-    }
-    else{ 
+        $totales = $ticket->total($_GET['mesa']);
+        $num_mesa = $ticket->num_mesa($_GET['mesa']);
     };
-
-    if(isset($_GET['producto'])){
-        $precios_bi = $precio_bi->index($_GET['producto']);
-    }
-    else{ 
-    };
-
+ 
 ?>
 <div class="col-12 col-lg-5 col-xl-4 mt-5">
     <aside>
-        <h2 class="text-center">TICKET MESA 1</h2>
+        <?php if(isset($num_mesa)):?>
+            <h2 class="text-center">TICKET MESA <?php  echo $num_mesa['numero'] ?></h2>
+        <?php else:?>
+            <h2 class="text-center">TICKET MESA</h2>
+        <?php endif;?>
+
         <ul class="list-group shadow mt-4">
         <?php if (isset($tickets)):?>
             <?php foreach($tickets as $ticket):?>
@@ -32,8 +30,10 @@
                         </div>
                         <p class="precio-prod"><?= $ticket['precio_base']?>€</p>
                     </li>   
-            <?php endforeach;?> 
-        <?php else:?>    
+            <?php endforeach;?>
+        <?php else:?>
+            <h4 class="nombre-prod mb-0"><?php
+                echo "No existen productos en esta mesa"?></h4>
         <?php endif;?>  
         </ul>
         <div class="row mt-3">
@@ -52,19 +52,25 @@
                     </div>
                     <div class="row justify-content-between g-0">
                         <div class="col">
-                            <?php if (isset($tickets)):?>
-                                <?php foreach($preciosbase as $preciobase):?>
-                                <h5 class="text-center text-white mb-0 pb-1"><?=$preciobase['SUM(tickets.precio_id)'];?></h5>
-                                <?php endforeach;?> 
-                            <?php else:?>  
-                            <?php endif;?>  
-                            </div>   
+                            <?php if (isset($totales) && $totales != null):?>
+                                <h5 class="text-center text-white mb-0 pb-1"><?=$totales['base'];?>€</h5>
+                            <?php else:?>
+                                <h5 class="text-center text-white mb-0 pb-1">0 €</h5>
+                            <?php endif;?>    
+                        </div>
+                        <div class="col"> 
+                            <?php if (isset($totales) && $totales != null):?>
+                                <h5 class="text-center text-white mb-0 border-start pb-1"><?=$totales['iva'];?>%</h5>
+                            <?php else:?>
+                                    <h5 class="text-center text-white mb-0 pb-1">0 </h5>
+                            <?php endif;?> 
                         </div>
                         <div class="col">
-                            <h5 class="text-center text-white mb-0 border-start pb-1">21%</h5>
-                        </div>
-                        <div class="col">
-                            <h5 class="text-center text-white mb-0 bg-dark pb-1">102.45 €</h5>
+                            <?php if (isset($totales) && $totales != null):?>
+                                <h5 class="text-center text-white mb-0 bg-dark pb-1"><?=$totales['total'];?> €</h5>
+                            <?php else: ?>
+                                <h5 class="text-center text-white mb-0 pb-1">0 €</h5>
+                            <?php endif;?> 
                         </div>
                     </div>
                 </div>
