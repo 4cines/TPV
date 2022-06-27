@@ -1,0 +1,8 @@
+Nombre de la categoría cuando entras en una categoría
+En categorías, solo aparecen las categorías con productos (modificar la consulta)
+
+
+CONSULTAS
+ventas por día (€ ingresado) -- SELECT precio_total FROM ventas 
+Platos más vendidos por categorías -- RANKING
+Métodos de pago más usados

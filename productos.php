@@ -6,6 +6,7 @@
 
 	$producto = new ProductController();
 	$productos = $producto->index($_GET['categoria']);
+    $categorianombre = $producto->nombre($_GET['categoria'])
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
             </div>
             <div class="col-12 col-lg-7 col-xl-8 order-lg-1 mt-5">
                 <section>
-                    <h2 class="text-center">TAPAS</h2>
+                    <h2 class="text-center"><?php echo $categorianombre['nombre']?></h2>
                     <div class="row">
                         <div class="col">
                             <ol class="breadcrumb mb-0 mt-3">
@@ -38,7 +39,7 @@
                                     <i class="icon ion-android-home me-2"></i>INICIO</span></a></li>
                                 <li class="breadcrumb-item"><a href="categorias.php?mesa=<?php echo $_GET['mesa'] ?>"><span>
                                     <i class="icon ion-social-buffer-outline me-2"></i>Categoría</span></a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span><i class="icon ion-android-apps me-2"></i>Tapas</span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span><i class="icon ion-android-apps me-2"></i><?php echo $categorianombre['nombre']?></span></li>
                             </ol>
                         </div>
                     </div>

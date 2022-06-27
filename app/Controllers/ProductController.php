@@ -19,6 +19,10 @@ class ProductController {
 
 		return $this->producto->index($categoria);
 	}
+
+	public function nombre($categoria){
+		return $this->producto->nombre($categoria);
+	}
 }
 
 ?>

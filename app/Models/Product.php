@@ -17,6 +17,16 @@ class Product extends Connection
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+        public function nombre($categoria){
+        
+                $query =  "SELECT nombre FROM productos_categorias WHERE activo=1 AND productos_categorias.id = $categoria";
+                        
+                $stmt = $this->pdo->prepare($query);
+                $result = $stmt->execute();
+        
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+                }
 }
 
 ?>
