@@ -19,8 +19,12 @@ class TicketController {
 		return $this->ticket->index($mesa);
 	}
 
-	public function index($preciobase){
-		return $this->precio_bi->index($preciobase);
+	public function total($mesa){
+		return $this->ticket->total($mesa);
+	}
+
+	public function num_mesa($mesa){
+		return $this->ticket->num_mesa($mesa);
 	}
 }
 

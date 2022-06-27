@@ -62,7 +62,7 @@
                             <?php if (isset($totales) && $totales != null):?>
                                 <h5 class="text-center text-white mb-0 border-start pb-1"><?=$totales['iva'];?>%</h5>
                             <?php else:?>
-                                    <h5 class="text-center text-white mb-0 pb-1">0 </h5>
+                                    <h5 class="text-center text-white mb-0 pb-1">-</h5>
                             <?php endif;?> 
                         </div>
                         <div class="col">
