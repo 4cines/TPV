@@ -5,14 +5,16 @@
 	use app\Controllers\VentasController;
 
 	$venta = new VentasController();
-    $ventas = $venta->index();
-    $productos = $venta->productos($_GET['venta']);
+    $ventas = $venta->index($_GET['fecha'], $_GET['mesa']);
+
 
     if(isset($_GET['venta'])){
         $ticket = $venta->numero($_GET['venta']);
+        $productos = $venta->productos($_GET['venta']);
     };
-?>
 
+    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +52,7 @@
                                     <?php if(isset($ticket)):?>
                                         <p class="card-text">
                                             <strong>Mesa:</strong> <?php echo $ticket['mesa_id']?><br>
-                                            <strong>Método de pago:</strong> <?php echo $ticket['numero_ticket']?><br>
+                                            <strong>Método de pago:</strong> <?php echo $ticket['metodo_pago_id']?><br>
                                             <strong>Total base:</strong> <?php echo $ticket['precio_total_base']?><br>
                                             <strong>Total IVA:</strong> <?php echo $ticket['precio_total_iva']?><br>
                                             <strong>Total:</strong> <?php echo $ticket['precio_total']?>
@@ -66,18 +68,22 @@
                         <thead>
                             <tr>
                                 <th class="text-center"scope="col"></th>
-                                <th class="text-center" scope="col">Nombre</th>
-                                <th class="text-center" scope="col">Precio Base</th>
-                                <th class="text-center" scope="col">Cantidad</th>
+                                <th class="text-center" scope="col">NOMBRE</th>
+                                <th class="text-center" scope="col">PRECIO</th>
+                                <th class="text-center" scope="col">CANTIDAD</th>
                             </tr>
                         </thead>
                         <tbody>
-                                <tr>
-                                    <td class="text-center"><img class="img-ticket" src="<?=$producto['imagen_url'];?>"></td>
-                                    <td class="text-center">Callos</td>
-                                    <td class="text-center">30 €</td>
-                                    <td class="text-center">5</td>
-                                </tr>
+                            <?php if(isset($_GET['venta'])):?>
+                                <?php foreach($productos as $producto):?>
+                                    <tr> 
+                                        <td class="text-center"><img class="img-ticket" src="<?=$producto['imagen_url'];?>"></td>
+                                        <td class="text-center"><?php echo $producto['nombre']?></td>
+                                        <td class="text-center"><?php echo $producto['precio_base']?> €</td>
+                                        <td class="text-center"><?php echo $producto['cantidad']?></td>
+                                    </tr>
+                                <?php endforeach;?> 
+                            <?php endif;?>                           
                         </tbody>
                     </table>
                 </section>
@@ -86,9 +92,53 @@
             <div class="col-12 col-lg-5 col-xl-4 mt-5">
                 <aside>
                     <h2 class="text-center">VENTAS</h2>
+                    <form action="ventas.php" method="GET">
+
+                        <div class="row mt-3 mb-3">
+                            <div class="col-6">
+                                <p>Filtrar por fecha:</p>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="date" name="fecha" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 mb-3">
+                            <div class="col-6">
+                                <p>Filtrar por mesa:</p>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <select name="mesa" class="form-control">
+                                        <option value="">Todas</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 mb-3">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                            </div>
+                        </div>
+
+                    </form>
                     <div class="list-group">
                         <?php foreach($ventas as $venta):?>
-                            <?php if((isset($_GET['venta'])) && $_GET['venta']== $venta['id']): ?>
+                            <?php if((isset($_GET['fecha'],$_GET['mesa'])) && $_GET['fecha']== $venta['fecha'] && $_GET['mesa']==$venta['mesa']): ?>
                                 <a class="sale-item list-group-item list-group-item-action active" href="ventas.php?venta=<?php echo $venta['id']?>" aria-current="true">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
@@ -96,8 +146,9 @@
                                         <small>Mesa: <?php echo $venta['mesa_id']?></small>
                                     </div>
                                     <p class="mb-1"><?php echo $venta['precio_total']?>€</p>
-                                </a>
-                            <?php else: ?>
+                                    <small>Fecha Emision: <?php echo $venta['fecha_emision']?></small>
+                                </a>  
+                            <?php else:?>
                                 <a class="sale-item list-group-item list-group-item-action" href="ventas.php?venta=<?php echo $venta['id']?>" aria-current="true">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
@@ -105,6 +156,7 @@
                                         <small>Mesa: <?php echo $venta['mesa_id']?></small>
                                     </div>
                                     <p class="mb-1"><?php echo $venta['precio_total']?>€</p>
+                                    <small>Fecha Emision: <?php echo $venta['fecha_emision']?></small>
                                 </a>
                             <?php endif;?>
                         <?php endforeach;?>
