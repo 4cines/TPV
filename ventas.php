@@ -5,15 +5,17 @@
 	use app\Controllers\VentasController;
 
 	$venta = new VentasController();
-    $ventas = $venta->index($_GET['fecha'], $_GET['mesa']);
 
+    $fecha = !empty($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d');
+    $mesa = !empty($_GET['mesa']) ? $_GET['mesa'] : null;
+
+    $ventas = $venta->index($mesa, $fecha);
 
     if(isset($_GET['venta'])){
         $ticket = $venta->numero($_GET['venta']);
         $productos = $venta->productos($_GET['venta']);
     };
 
-    
 ?>
 
 <!DOCTYPE html>
@@ -138,28 +140,29 @@
                     </form>
                     <div class="list-group">
                         <?php foreach($ventas as $venta):?>
-                            <?php if((isset($_GET['fecha'],$_GET['mesa'])) && $_GET['fecha']== $venta['fecha'] && $_GET['mesa']==$venta['mesa']): ?>
-                                <a class="sale-item list-group-item list-group-item-action active" href="ventas.php?venta=<?php echo $venta['id']?>" aria-current="true">
+                            <?php if(isset($_GET['venta'])):?>
+                                <a class="sale-item list-group-item list-group-item-action active" href="ventas.php?venta=<?php echo $venta['id']?>&fecha=<?php echo $fecha?>&mesa=<?php echo $mesa?>" aria-current="true">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
                                         <small>Hora: <?php echo $venta['hora_emision']?></small>
-                                        <small>Mesa: <?php echo $venta['mesa_id']?></small>
-                                    </div>
-                                    <p class="mb-1"><?php echo $venta['precio_total']?>€</p>
-                                    <small>Fecha Emision: <?php echo $venta['fecha_emision']?></small>
-                                </a>  
-                            <?php else:?>
-                                <a class="sale-item list-group-item list-group-item-action" href="ventas.php?venta=<?php echo $venta['id']?>" aria-current="true">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
-                                        <small>Hora: <?php echo $venta['hora_emision']?></small>
-                                        <small>Mesa: <?php echo $venta['mesa_id']?></small>
+                                        <small>Mesa: <?php echo $venta['mesa']?></small>
                                     </div>
                                     <p class="mb-1"><?php echo $venta['precio_total']?>€</p>
                                     <small>Fecha Emision: <?php echo $venta['fecha_emision']?></small>
                                 </a>
-                            <?php endif;?>
+                                <?php else:?>
+                                <a class="sale-item list-group-item list-group-item-action" href="ventas.php?venta=<?php echo $venta['id']?>&fecha=<?php echo $fecha?>&mesa=<?php echo $mesa?>" aria-current="true">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
+                                        <small>Hora: <?php echo $venta['hora_emision']?></small>
+                                        <small>Mesa: <?php echo $venta['mesa']?></small>
+                                    </div>
+                                    <p class="mb-1"><?php echo $venta['precio_total']?>€</p>
+                                    <small>Fecha Emision: <?php echo $venta['fecha_emision']?></small>
+                                </a>
+                            <?php endif;?>                           
                         <?php endforeach;?>
+
                     </div>
                 </aside>
             </div>

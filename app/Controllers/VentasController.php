@@ -15,8 +15,8 @@ class VentasController {
 		$this->ventas = new Ventas();
 	}
 
-	public function index($fecha, $mesa){
-		return $this->ventas->index($fecha, $mesa);
+	public function index($mesa,$fecha){
+		return $this->ventas->index($mesa,$fecha);
 	}
 
     public function numero($venta){

@@ -8,16 +8,19 @@ use core\Connection;
 
 class Ventas extends Connection 
 {
-	public function index($fecha, $mesa){
-		
-        $query =  "SELECT ventas.id AS id, numero_ticket, hora_emision, mesa_id, precio_total, fecha_emision  FROM ventas 
-        WHERE activo = 1 AND fecha_emision = '$fecha' AND mesa_id = $mesa";
+	public function index($mesa, $fecha){
+
+        if($mesa == null){
+            $query =  "SELECT ventas.numero_ticket, ventas.id, ventas.hora_emision, mesas.id AS mesa, ventas.precio_total, ventas.fecha_emision FROM ventas INNER JOIN mesas ON ventas.mesa_id = mesas.id WHERE ventas.activo = 1 AND ventas.fecha_emision = '$fecha'";
+        }else{
+            $query =  "SELECT ventas.numero_ticket, ventas.id, ventas.hora_emision, mesas.id AS mesa, ventas.precio_total, ventas.fecha_emision FROM ventas INNER JOIN mesas ON ventas.mesa_id = mesas.id WHERE ventas.activo = 1 AND mesas.id = $mesa";
+        }
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
-	}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}    
 
     public function numero($venta){
 		
