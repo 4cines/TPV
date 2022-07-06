@@ -10,12 +10,12 @@ class Product extends Connection
 {
 	public function index($categoria){
         
-        $query =  "SELECT * FROM productos WHERE productos.activo= 1 AND categoria_id= $categoria";
-                
-        $stmt = $this->pdo->prepare($query);
-        $result = $stmt->execute();
+                $query =  "SELECT productos.nombre, productos.imagen_url, precios.id AS precio_id FROM productos INNER JOIN precios ON precios.producto_id = productos.id WHERE productos.activo= 1 AND categoria_id = $categoria AND precios.vigente = 1 ";
+                        
+                $stmt = $this->pdo->prepare($query);
+                $result = $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
         public function nombre($categoria){

@@ -35,7 +35,7 @@
                     <div class="row mb-5">
                         <?php foreach($mesas as $mesa):?>
                             <?php if($mesa["estado"]== 1): ?>
-                                <div class="col-4 gy-4"><a class="btn btn-success w-100 p-4 p-sm-5 shadow-sm 
+                                <div class="table-colors col-4 gy-4" data-table="<?php echo $_GET['mesa'] ?>"><a class="btn btn-success w-100 p-4 p-sm-5 shadow-sm 
                                 mesas rounded-0" role="button" href="categorias.php?mesa=<?php echo $mesa['id']?>">
                                 <?= $mesa["numero"]?> </a></div>
                             <?php elseif ((isset($_GET['mesa'])) && $_GET['mesa']== $mesa['id']): ?>
@@ -56,6 +56,7 @@
         </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="module" src="dist/main.js"></script>
 </body>
 
 </html>

@@ -26,6 +26,11 @@ class VentasController {
     public function productos($mesa){
 		return $this->ventas->productos($mesa);
 	}
+
+	public function ingresosmediatotales($fecha){
+		return $this->ventas->ingresosmediatotales($fecha);
+	}
+
 }
 
 ?>

@@ -11,8 +11,8 @@
         $totales = $ticket->total($_GET['mesa']);
         $num_mesa = $ticket->num_mesa($_GET['mesa']);
     };
- 
 ?>
+
 <div class="col-12 col-lg-5 col-xl-4 mt-5">
     <aside>
         <?php if(isset($num_mesa)):?>
@@ -24,7 +24,7 @@
         <ul class="list-group shadow mt-4">
         <?php if (isset($tickets)):?>
             <?php foreach($tickets as $ticket):?>
-                    <li class="list-group-item d-flex align-items-center"><button class="btn btn-light btn-sm me-2" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
+                    <li class="list-group-item d-flex align-items-center"><button class="delete-product btn btn-light btn-sm me-2" data-ticket="<?= $ticket['ticket_id']; ?>" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
                         <div class="flex-grow-1"><span class="categoria-prod"><?= $ticket['categoria'];?></span>
                             <h4 class="nombre-prod mb-0"><?= $ticket['nombre'];?></h4>
                         </div>

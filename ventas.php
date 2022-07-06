@@ -2,12 +2,19 @@
 
 	require_once 'app/Controllers/VentasController.php';
 
+    require_once 'app/Controllers/TableController.php';
+
 	use app\Controllers\VentasController;
 
+    use app\Controllers\TableController;
+
 	$venta = new VentasController();
+    $totalmesas = new TableController();
 
     $fecha = !empty($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d');
     $mesa = !empty($_GET['mesa']) ? $_GET['mesa'] : null;
+
+    $totalmesas = $totalmesas->index();
 
     $ventas = $venta->index($mesa, $fecha);
 
@@ -15,6 +22,8 @@
         $ticket = $venta->numero($_GET['venta']);
         $productos = $venta->productos($_GET['venta']);
     };
+
+    $totalingresosmedia = $venta->ingresosmediatotales($fecha);
 
 ?>
 
@@ -116,16 +125,10 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <select name="mesa" class="form-control">
-                                        <option value="">Todas</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
+                                        <option value=""> TODAS </option>
+                                        <?php foreach($totalmesas as $totalmesa):?>
+                                            <option value="<?= $totalmesa['numero'];?>"><?= $totalmesa['numero'];?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                             </div>
@@ -164,6 +167,33 @@
                         <?php endforeach;?>
 
                     </div>
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="bg-secondary" id="refresh-price">
+                                <div class="row justify-content-between g-0">
+                                    <div class="col">
+                                        <h5 class="text-center text-white mb-0 pt-1">Total Ingresos</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="text-center text-white mb-0 pt-1">Media del día</h5>
+                                    </div>
+                                    <div class="row justify-content-between g-0">
+                                        <div class="col">
+                                            <h5 class="text-center text-white mb-0 pb-1">
+                                                <?= $totalingresosmedia['total'] ;?> 
+                                            </h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="text-center text-white mb-0 border-start pb-1">
+                                                <?= $totalingresosmedia['media']; ?> 
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </aside>
             </div>
 
@@ -171,6 +201,7 @@
     </div>
 
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="module" src="dist/main.js"></script>
 </body>
 
 </html>

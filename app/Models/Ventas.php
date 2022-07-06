@@ -51,5 +51,26 @@ class Ventas extends Connection
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    public function  ingresosmediatotales($fecha){
+		
+        $query =  "SELECT SUM(precio_total) AS total, (SELECT 
+        ROUND(AVG(total),2) AS media
+    FROM (SELECT
+        SUM(precio_total) AS total, DAYNAME(fecha_emision) AS dia
+    FROM
+        ventas 
+    WHERE activo =1
+    GROUP BY fecha_emision) subconsulta
+    
+    WHERE dia = DAYNAME('2022-06-29')
+    GROUP BY dia
+    ) AS media FROM ventas WHERE activo = 1 AND fecha_emision = '$fecha'";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

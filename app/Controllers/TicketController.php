@@ -26,6 +26,15 @@ class TicketController {
 	public function num_mesa($mesa){
 		return $this->ticket->num_mesa($mesa);
 	}
+
+	public function addProduct($price_id, $table_id){
+		return $this->ticket->addProduct($price_id, $table_id);
+	}
+
+	public function deleteProduct($ticket_id){
+		return $this->ticket->deleteProduct($ticket_id);
+	}
+	
 }
 
 ?>
