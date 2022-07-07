@@ -24,7 +24,7 @@
         <ul class="list-group shadow mt-4">
         <?php if (isset($tickets)):?>
             <?php foreach($tickets as $ticket):?>
-                    <li class="list-group-item d-flex align-items-center"><button class="delete-product btn btn-light btn-sm me-2" data-ticket="<?= $ticket['ticket_id']; ?>" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
+                    <li class="list-group-item d-flex align-items-center"><button class="delete-product btn btn-light btn-sm me-2" data-table="<?php echo $_GET['mesa'];?>" data-ticket="<?= $ticket['ticket_id']; ?>" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
                         <div class="flex-grow-1"><span class="categoria-prod"><?= $ticket['categoria'];?></span>
                             <h4 class="nombre-prod mb-0"><?= $ticket['nombre'];?></h4>
                         </div>
@@ -88,28 +88,18 @@
                                 <div class="modal-body">
                                     <p class="text-center text-muted">Está a punto de borrar el pedido sin ser cobrado. ¿Está completamente seguro de realizar esta acción?</p>
                                 </div>
-                                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">CERRAR</button><button class="btn btn-success" type="button">ELIMINAR</button></div>
+                                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">CERRAR</button><button class="delete-all-products btn btn-success" data-table="<?php echo $_GET['mesa'];?>" type="button">ELIMINAR</button></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div><a class="btn btn-success btn-lg w-100" role="button" href="#myModal-2" data-bs-toggle="modal">COBRAR</a>
+                <div><a class="charge-ticket btn btn-success btn-lg w-100" data-table="<?php echo $_GET['mesa'];?>"data-price="<?php echo $_GET['mesa'];?>" role="button" href="#myModal-2" data-bs-toggle="modal">COBRAR</a>
                     <div class="modal fade" role="dialog" tabindex="-1" id="myModal-2">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Metodo de pago</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row align-items-center flex-column">
-                                        <div class="col-6 d-lg-flex m-2"><button class="btn btn-primary w-100" type="button">EFECTIVO</button></div>
-                                        <div class="col-6 d-lg-flex m-2"><button class="btn btn-success w-100" type="button">TARJETA CRÉDITO</button></div>
-                                        <div class="col-6 d-lg-flex m-2"><button class="btn btn-danger w-100" type="button">BIZUM</button></div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">CERRAR</button></div>
+                            <?php include('metodospago.php');?>
                             </div>
                         </div>
                     </div>

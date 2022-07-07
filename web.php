@@ -2,9 +2,11 @@
 
     require_once 'app/Controllers/TicketController.php';
     require_once 'app/Controllers/TableController.php';
+    require_once 'app/Controllers/VentasController.php';
   
     use app\Controllers\TicketController;
     use app\Controllers\TableController;
+    use app\Controllers\VentasController;
 
     header("Content-Type: application/json"); // lo que va a recibir es un JSON
 
@@ -25,7 +27,7 @@
 
                 $newProduct = $ticket->addProduct($json->price_id, $json->table_id);
                 $totalPrice = $ticket->total($json->table_id);
-                $tableState = $table->updateState($json->table_id, 0);
+                $table->updateState($json->table_id, 0);
 
                 $response = array(
                     'status' => 'ok',
@@ -40,12 +42,53 @@
             case 'deleteProduct':
                 
                 $ticket = new TicketController();
+                $table = new TableController();
 
-                $deleteProduct = $ticket->deleteProduct($json->ticket_id);
+                $ticket->deleteProduct($json->ticket_id);
+                $totalPrice = $ticket->total($json->table_id);
+                
+                if($totalPrice['total'] == 0){
+                    $table->updateState($json->table_id, 1);
+                }
+                
+                $response = array(
+                    'status' => 'ok',
+                    'total' => $totalPrice,
+                );
+
+                echo json_encode($response);
+
+                break;
+
+            case 'deleteAllProducts':
+            
+                $ticket = new TicketController();
+                $table = new TableController();
+
+                $ticket->deleteAllProducts($json->table_id);
+                $table->updateState($json->table_id, 1);
 
                 $response = array(
                     'status' => 'ok',
-                    'deleteProduct' => $deleteProduct,
+                );
+
+                echo json_encode($response);
+
+                break;
+
+            case 'chargeTicket':
+
+                $ticket = new TicketController();
+                $table = new TableController();
+
+                $newProduct = $ticket->addProduct($json->price_id, $json->table_id);
+                $totalPrice = $ticket->total($json->table_id);
+                $table->updateState($json->table_id, 0);
+
+                $response = array(
+                    'status' => 'ok',
+                    'newProduct' => $newProduct,
+                    'total' => $totalPrice,
                 );
 
                 echo json_encode($response);

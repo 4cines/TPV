@@ -34,7 +34,11 @@ class TicketController {
 	public function deleteProduct($ticket_id){
 		return $this->ticket->deleteProduct($ticket_id);
 	}
-	
+
+	public function deleteAllProducts($num_table){
+		return $this->ticket->deleteAllProducts($num_table);
+	}
+		
 }
 
 ?>

@@ -73,9 +73,19 @@ class Ticket extends Connection
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return 'ok';
     }
 
+    public function deleteAllProducts($num_table)
+    {
+
+        $query =  "UPDATE tickets SET activo = 0, actualizado = NOW() WHERE mesa_id = $num_table AND venta_id IS NULL";
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return 'ok';
+    }
 
 }
 
