@@ -31,6 +31,10 @@ class VentasController {
 		return $this->ventas->ingresosmediatotales($fecha);
 	}
 
-}
+	public function chargeTicket($table_id, $metodo_pago, $totalPrice){
+		return $this->ventas->chargeTicket($table_id, $metodo_pago, $totalPrice);
 
+	}
+
+}
 ?>

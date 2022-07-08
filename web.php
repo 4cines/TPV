@@ -78,17 +78,16 @@
 
             case 'chargeTicket':
 
-                $ticket = new TicketController();
                 $table = new TableController();
-
-                $newProduct = $ticket->addProduct($json->price_id, $json->table_id);
-                $totalPrice = $ticket->total($json->table_id);
-                $table->updateState($json->table_id, 0);
+                $ticket = new TicketController();
+                $ventas = new VentasController();
+                
+                $totalPrice = $ticket->total($json->table_id);            
+                $chargeTicket= $ventas->chargeTicket($json->table_id, $json->metodo_pago, $totalPrice);
+                $table->updateState($json->table_id, 1);
 
                 $response = array(
                     'status' => 'ok',
-                    'newProduct' => $newProduct,
-                    'total' => $totalPrice,
                 );
 
                 echo json_encode($response);

@@ -95,11 +95,11 @@
                 </div>
             </div>
             <div class="col-6">
-                <div><a class="charge-ticket btn btn-success btn-lg w-100" data-table="<?php echo $_GET['mesa'];?>"data-price="<?php echo $_GET['mesa'];?>" role="button" href="#myModal-2" data-bs-toggle="modal">COBRAR</a>
+                <div><a class="btn btn-success btn-lg w-100" role="button" href="#myModal-2" data-bs-toggle="modal">COBRAR</a>
                     <div class="modal fade" role="dialog" tabindex="-1" id="myModal-2">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                            <?php include('metodospago.php');?>
+                            <?php include('metodospago.php')?>
                             </div>
                         </div>
                     </div>

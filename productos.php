@@ -52,7 +52,7 @@
                     </div>
                 </section>
             </div>       
-            <?php include('tickets.php');?>
+            <?php include('tickets.php')?>
         </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

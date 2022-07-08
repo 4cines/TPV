@@ -6,18 +6,18 @@ require_once 'app/Models/MetodosPago.php';
 
 use app\Models\MetodosPago;
 
-class MetodosPago {
+class MetodosPagoController {
 
 	protected $metodos_pago;
 
 	public function __construct(){  
 
-		// $this->metodos_pago= new ProductCategory();
+		 $this->metodos_pago= new MetodosPago();
 	}
 
 	public function index(){
 
-		return $this->product_category->index();
+		return $this->metodos_pago->index();
 	}
 }
 

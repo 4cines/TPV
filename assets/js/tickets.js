@@ -2,7 +2,7 @@ export let renderTickets = () => {
 
     let deleteProducts = document.querySelectorAll(".delete-product");
     let deleteAllProducts = document.querySelector(".delete-all-products");
-    let chargeTicket = document.querySelector(".charge-ticket")
+    let chargeTicket = document.querySelector(".charge-ticket");
 
     deleteProducts.forEach(deleteProduct => {
 
@@ -81,7 +81,7 @@ export let renderTickets = () => {
             let data = {};
             data["route"] = 'chargeTicket';
             data["table_id"] = chargeTicket.dataset.table;
-            data["ticket_id"] = chargeTicket.dataset.ticket;
+            data["metodo_pago"] = chargeTicket.dataset.metodopago;
             
 
             let response = await fetch('web.php', {
@@ -104,7 +104,7 @@ export let renderTickets = () => {
                 console.log(JSON.stringify(error));
             });
         };
-
+        
         sendPostRequest();
     });
 };

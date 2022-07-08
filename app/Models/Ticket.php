@@ -45,7 +45,7 @@ class Ticket extends Connection
 	public function addProduct($price_id, $table_id)
     {
 
-        $query =  "INSERT INTO tickets (precio_id, mesa_id, activo, creado, actualizado) VALUES (". $price_id.", ".$table_id.", 1, NOW(), NOW())";
+        $query =  "INSERT INTO tickets (mesa_id, precio_id, activo, creado, actualizado) VALUES (".$table_id.",".$price_id.", 1, NOW(), NOW())";
 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
