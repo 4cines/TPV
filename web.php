@@ -81,10 +81,13 @@
                 $table = new TableController();
                 $ticket = new TicketController();
                 $ventas = new VentasController();
-                
-                $totalPrice = $ticket->total($json->table_id);            
-                $chargeTicket= $ventas->chargeTicket($json->table_id, $json->metodo_pago, $totalPrice);
-                $table->updateState($json->table_id, 1);
+
+                $totalPrice = $ticket->total($json->table_id);
+                $last_ticket_number =  $ventas->lastTicketNumber();
+                $new_ticket_number = $ventas->newTicketNumber($last_ticket_number);
+                $charge_ticket_id = $ventas->chargeTicket($json->table_id, $json->metodo_pago, $totalPrice, $new_ticket_number);
+                $ticket->updateTicket($json->table_id, $charge_ticket_id);
+                $table->updateState($json->table_id, 1);     
 
                 $response = array(
                     'status' => 'ok',

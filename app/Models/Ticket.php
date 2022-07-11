@@ -87,6 +87,16 @@ class Ticket extends Connection
         return 'ok';
     }
 
-}
+    public function updateTicket($table_id, $charge_ticket_id)
+    {
 
+        $query =  "UPDATE tickets SET venta_id = $charge_ticket_id WHERE mesa_id = $table_id AND venta_id IS NULL";
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return 'ok';
+    }
+    
+}
 ?>

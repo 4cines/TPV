@@ -73,21 +73,25 @@ class Ventas extends Connection
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function chargeTicket($table_id, $metodo_pago, $totalPrice){
+    public function chargeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number){
         
-        $query =  "INSERT INTO ventas (precio_total_base, precio_total_iva, precio_total, metodo_pago_id, mesa_id, fecha_emision, hora_emision, activo, creado, actualizado) 
-        VALUES (".$totalPrice['base'].", ".$totalPrice['iva'].", ".$totalPrice['total'].", ".$metodo_pago.", ".$table_id.", NOW(), NOW(), 1, NOW(), NOW())";
+        $query =  "INSERT INTO ventas (numero_ticket, precio_total_base, precio_total_iva, precio_total, metodo_pago_id, mesa_id, fecha_emision, hora_emision, activo, creado, actualizado) 
+        VALUES (".$new_ticket_number.", ".$totalPrice['base'].", ".$totalPrice['iva'].", ".$totalPrice['total'].", ".$metodo_pago.", ".$table_id.", NOW(), NOW(), 1, NOW(), NOW())";
 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
 
-        $query =  " INSERT INTO tickets (venta_id) VALUES (".$id.")";
+        return $id;
+    }
+
+    public function lastTicketNumber(){
+        $query = "SELECT numero_ticket FROM ventas ORDER BY id DESC LIMIT 1";
 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
 
-        return 'ok';
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 ?>

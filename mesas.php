@@ -34,16 +34,16 @@
                     <h2 class="text-center">MESAS</h2>
                     <div class="row mb-5">
                         <?php foreach($mesas as $mesa):?>
-                            <?php if($mesa["estado"]== 1): ?>
-                                <div class="table-colors col-4 gy-4" data-table="<?php echo $_GET['mesa'] ?>"><a class="btn btn-success w-100 p-4 p-sm-5 shadow-sm 
+                            <?php if ((isset($_GET['mesa'])) && $_GET['mesa']== $mesa['id']): ?>
+                                <div class="table-colors col-4 gy-4" data-table="<?php echo $_GET['mesa'] ?>"><a class="btn btn-primary w-100 p-4 p-sm-5 shadow-sm 
                                 mesas rounded-0" role="button" href="categorias.php?mesa=<?php echo $mesa['id']?>">
                                 <?= $mesa["numero"]?> </a></div>
-                            <?php elseif ((isset($_GET['mesa'])) && $_GET['mesa']== $mesa['id']): ?>
-                                <div class="col-4 gy-4"><a class="btn btn-primary w-100 p-4 p-sm-5 shadow-sm 
+                            <?php elseif ($mesa["estado"]== 1): ?>
+                                <div class="table-colors col-4 gy-4"><a class="btn btn-success w-100 p-4 p-sm-5 shadow-sm 
                                 mesas rounded-0" role="button" href="categorias.php?mesa=<?php echo $mesa['id']?>">
                                 <?= $mesa["numero"]?> </a></div>
                             <?php else: ?>
-                                <div class="col-4 gy-4"><a class="btn btn-danger w-100 p-4 p-sm-5 shadow-sm 
+                                <div class="table-colors col-4 gy-4" ><a class="btn btn-danger w-100 p-4 p-sm-5 shadow-sm 
                                 mesas rounded-0" role="button" href="categorias.php?mesa=<?php echo $mesa['id'] ?>">
                                 <?= $mesa["numero"]?> </a></div>
                             <?php endif; ?>

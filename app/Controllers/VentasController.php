@@ -31,10 +31,22 @@ class VentasController {
 		return $this->ventas->ingresosmediatotales($fecha);
 	}
 
-	public function chargeTicket($table_id, $metodo_pago, $totalPrice){
-		return $this->ventas->chargeTicket($table_id, $metodo_pago, $totalPrice);
-
+	public function lastTicketNumber(){
+		return $this->ventas->lastTicketNumber();
 	}
 
-}
+	public function chargeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number){
+		return $this->ventas->chargeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number);
+	}
+
+	public function newTicketNumber($last_ticket_number){
+		if(strpos(end($last_ticket_number), date('ymd')) !== false){
+				return end($last_ticket_number) + 1;
+			} else {
+				return date('ymd').'0001';
+			}
+		return $this->ventas-> newTicketNumber($last_ticket_number);
+	}
+}	
+
 ?>

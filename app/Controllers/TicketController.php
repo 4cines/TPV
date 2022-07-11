@@ -38,6 +38,10 @@ class TicketController {
 	public function deleteAllProducts($num_table){
 		return $this->ticket->deleteAllProducts($num_table);
 	}
+
+	public function updateTicket($table_id, $charge_ticket_id){
+		return $this->ticket->updateTicket($table_id, $charge_ticket_id);
+	}
 		
 }
 
