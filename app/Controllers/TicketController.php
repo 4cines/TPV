@@ -42,6 +42,11 @@ class TicketController {
 	public function updateTicket($table_id, $charge_ticket_id){
 		return $this->ticket->updateTicket($table_id, $charge_ticket_id);
 	}
+
+	public function firstproduct($charge_ticket_id){
+
+		return $this->ticket->firstproduct($charge_ticket_id);
+	}
 		
 }
 

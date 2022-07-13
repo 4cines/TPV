@@ -20,6 +20,7 @@ class TableController {
 	}
 
 	public function updateState($table_id, $state){
+
 		return $this->table->updateState($table_id, $state);
 	}
 

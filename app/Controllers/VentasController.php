@@ -46,7 +46,11 @@ class VentasController {
 				return date('ymd').'0001';
 			}
 		return $this->ventas-> newTicketNumber($last_ticket_number);
-	}
+	}	
+
+	public function timeservice($charge_ticket_id, $first_product){
+		return $this->ventas->timeservice($charge_ticket_id, $first_product);
+	}	
 }	
 
 ?>

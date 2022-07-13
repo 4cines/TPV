@@ -22,7 +22,7 @@ class Ticket extends Connection
 	
 	public function total($mesa){
 		
-		$query = "SELECT ROUND(SUM(precios.precio_base), 2) AS base, ROUND(SUM(precios.precio_base * iva.multiplicador) ,2) AS total, iva.tipo AS iva FROM tickets INNER JOIN precios ON tickets.precio_id = precios.id INNER JOIN iva ON precios.iva_id = iva.id WHERE tickets.mesa_id = $mesa AND tickets.venta_id IS NULL AND tickets.activo = 1 GROUP BY iva.tipo";
+		$query = "SELECT ROUND(SUM(precios.precio_base), 2) AS base, ROUND(SUM(precios.precio_base * iva.multiplicador) ,2) AS total,  ROUND(SUM(precios.precio_base * iva.multiplicador) - SUM(precios.precio_base) ,2) AS total_iva, iva.tipo AS iva FROM tickets INNER JOIN precios ON tickets.precio_id = precios.id INNER JOIN iva ON precios.iva_id = iva.id WHERE tickets.mesa_id = $mesa AND tickets.venta_id IS NULL AND tickets.activo = 1 GROUP BY iva.tipo";
 				
 		$stmt = $this->pdo->prepare($query);
 		$result = $stmt->execute();
@@ -98,5 +98,15 @@ class Ticket extends Connection
         return 'ok';
     }
     
+    public function firstproduct($charge_ticket_id){
+        $query = "SELECT creado FROM tickets WHERE activo = 1 AND venta_id = $charge_ticket_id LIMIT 1";
+        
+        file_put_contents("fichero.txt", $query);
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

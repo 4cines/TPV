@@ -88,6 +88,8 @@
                 $charge_ticket_id = $ventas->chargeTicket($json->table_id, $json->metodo_pago, $totalPrice, $new_ticket_number);
                 $ticket->updateTicket($json->table_id, $charge_ticket_id);
                 $table->updateState($json->table_id, 1);     
+                $first_product = $ticket->firstproduct($charge_ticket_id);
+                $ventas->timeservice($charge_ticket_id, $first_product['creado']);
 
                 $response = array(
                     'status' => 'ok',
@@ -96,6 +98,7 @@
                 echo json_encode($response);
 
                 break;
+
         }
 
     } else {

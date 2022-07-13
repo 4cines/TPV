@@ -56,16 +56,16 @@ class Ventas extends Connection
 		
         $query =  "SELECT SUM(precio_total) AS total, (SELECT 
         ROUND(AVG(total),2) AS media
-    FROM (SELECT
-        SUM(precio_total) AS total, DAYNAME(fecha_emision) AS dia
-    FROM
-        ventas 
-    WHERE activo =1
-    GROUP BY fecha_emision) subconsulta
-    
-    WHERE dia = DAYNAME('2022-06-29')
-    GROUP BY dia
-    ) AS media FROM ventas WHERE activo = 1 AND fecha_emision = '$fecha'";
+        FROM (SELECT
+            SUM(precio_total) AS total, DAYNAME(fecha_emision) AS dia
+        FROM
+            ventas 
+        WHERE activo =1
+        GROUP BY fecha_emision) subconsulta
+        
+        WHERE dia = DAYNAME('2022-06-29')
+        GROUP BY dia
+        ) AS media FROM ventas WHERE activo = 1 AND fecha_emision = '$fecha'";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
@@ -76,11 +76,13 @@ class Ventas extends Connection
     public function chargeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number){
         
         $query =  "INSERT INTO ventas (numero_ticket, precio_total_base, precio_total_iva, precio_total, metodo_pago_id, mesa_id, fecha_emision, hora_emision, activo, creado, actualizado) 
-        VALUES (".$new_ticket_number.", ".$totalPrice['base'].", ".$totalPrice['iva'].", ".$totalPrice['total'].", ".$metodo_pago.", ".$table_id.", NOW(), NOW(), 1, NOW(), NOW())";
+        VALUES (".$new_ticket_number.",".$totalPrice['base'].",".$totalPrice['total_iva'].", ".$totalPrice['total'].",".$metodo_pago.",".$table_id.",CURDATE(), CURTIME(), 1, NOW(), NOW())";
 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
+
+        file_put_contents("fichero1.txt",  $id);
 
         return $id;
     }
@@ -92,6 +94,17 @@ class Ventas extends Connection
         $result = $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    
+
+    public function timeservice($charge_ticket_id, $first_product){
+        $query =  "UPDATE ventas SET tiempo_servicio = TIMESTAMPDIFF(MINUTE, '" .$first_product ."', NOW()) WHERE ventas.id = $charge_ticket_id";
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return 'ok';
     }
 }
 ?>
