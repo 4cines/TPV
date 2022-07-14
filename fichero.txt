@@ -1,0 +1,1 @@
+SELECT creado FROM tickets WHERE activo = 1 AND venta_id = 71 LIMIT 1

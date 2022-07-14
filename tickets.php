@@ -22,29 +22,47 @@
         <?php endif;?>
 
         <ul class="list-group shadow mt-4">
-        <?php if (isset($tickets)):?>
-            <?php foreach($tickets as $ticket):?>
-                    <li class="list-group-item d-flex align-items-center"><button class="delete-product btn btn-light btn-sm me-2" data-table="<?php echo $_GET['mesa'];?>" data-ticket="<?= $ticket['ticket_id']; ?>" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
-                        <div class="flex-grow-1"><span class="categoria-prod"><?= $ticket['categoria'];?></span>
-                            <h4 class="nombre-prod mb-0"><?= $ticket['nombre'];?></h4>
-                        </div>
-                        <p class="precio-prod"><?= $ticket['precio_base']?>€</p>
-                    </li>   
-            <?php endforeach;?>
-        <?php else:?>
-            <h4 class="nombre-prod mb-0"><?php
-                echo "No existen productos en esta mesa"?></h4>
-        <?php endif;?>  
+            <?php if (isset($tickets)):?>
+                <?php foreach($tickets as $ticket):?>
+                        <li class="list-group-item d-flex align-items-center"><button class="delete-product btn btn-light btn-sm me-2" data-table="<?php echo $_GET['mesa'];?>" data-ticket="<?= $ticket['ticket_id']; ?>" type="button"><i class="la la-close"></i></button><img class="img-ticket" src="<?= $ticket['imagen_url'];?>">
+                            <div class="flex-grow-1"><span class="categoria-prod"><?= $ticket['categoria'];?></span>
+                                <h4 class="nombre-prod mb-0"><?= $ticket['nombre'];?></h4>
+                            </div>
+                            <p><span class="precio-prod"><?= $ticket['precio_base']?></span>€</p>
+                        </li>   
+                <?php endforeach;?>
+
+                <h4 class="nombre-prod no-products mb-0 d-none"><?php
+                    echo "No existen productos en esta mesa"?>
+                </h4>
+            <?php else:?>
+                <h4 class="nombre-prod no-products mb-0"><?php
+                    echo "No existen productos en esta mesa"?>
+                </h4>
+            <?php endif;?> 
+            
+            <?php if(isset($num_mesa)): ?>
+                <li class="add-product-layout list-group-item d-flex align-items-center d-none"><button class="delete-product btn btn-light btn-sm me-2" type="button" data-ticket="" data-table="<?php echo $_GET['mesa'];?>"><i class="la la-close"></i></button><img class="img-ticket" src="">
+                    <div class="flex-grow-1"><span class="categoria-prod"></span>
+                        <h4 class="nombre-prod mb-0">
+                    </div>
+                    <p><span class="precio-prod"></span>€</p>
+                </li>
+            <?php endif; ?>
         </ul>
         <div class="row mt-3">
             <div class="col">
-                <div class="bg-secondary">
+                <div class="totals bg-secondary">
                     <div class="row justify-content-between g-0">
                         <div class="col">
                             <h5 class="text-center text-white mb-0 pt-1">B. Imponible</h5>
                         </div>
                         <div class="col">
-                            <h5 class="text-center text-white mb-0 border-start pt-1">IVA</h5>
+                            <?php if (isset($totales) && $totales != null):?>
+                                <h5 class="text-center text-white mb-0 border-start pt-1">IVA (<span class="iva-percent"><?= $totales['iva'] ;?></span>)</h5>
+                            <?php else:?>
+                                <h5 class="text-center text-white mb-0 border-start pt-1">IVA (<span class="iva-percent"></span>)</h5>
+                            <?php endif;?> 
                         </div>
                         <div class="col">
                             <h5 class="text-center text-white mb-0 bg-dark pt-1">TOTAL</h5>
@@ -53,23 +71,23 @@
                     <div class="row justify-content-between g-0">
                         <div class="col">
                             <?php if (isset($totales) && $totales != null):?>
-                                <h5 class="text-center text-white mb-0 pb-1"><?=$totales['base'];?>€</h5>
+                                <h5 class="text-center text-white mb-0 pb-1"><span class="base"><?=$totales['base'];?></span>€</h5>
                             <?php else:?>
-                                <h5 class="text-center text-white mb-0 pb-1">0 €</h5>
+                                <h5 class="text-center text-white mb-0 pb-1"><span class="base">0</span> €</h5>
                             <?php endif;?>    
                         </div>
                         <div class="col"> 
                             <?php if (isset($totales) && $totales != null):?>
-                                <h5 class="text-center text-white mb-0 border-start pb-1"><?=$totales['iva'];?>%</h5>
+                                <h5 class="text-center text-white mb-0 border-start pb-1"><span class="iva"><?= $totales['total_iva'] ;?></span>€</h5>
                             <?php else:?>
-                                    <h5 class="text-center text-white mb-0 pb-1">-</h5>
+                                    <h5 class="text-center text-white mb-0 pb-1"><span class="iva">0</span>€</h5>
                             <?php endif;?> 
                         </div>
                         <div class="col">
                             <?php if (isset($totales) && $totales != null):?>
-                                <h5 class="text-center text-white mb-0 bg-dark pb-1"><?=$totales['total'];?> €</h5>
+                                <h5 class="text-center text-white mb-0 bg-dark pb-1"><span class="total"><?=$totales['total'];?></span> €</h5>
                             <?php else: ?>
-                                <h5 class="text-center text-white mb-0 bg-dark pb-1">0 €</h5>
+                                <h5 class="text-center text-white mb-0 bg-dark pb-1"><span class="total">0</span> €</h5>
                             <?php endif;?> 
                         </div>
                     </div>

@@ -24,6 +24,10 @@ class TableController {
 		return $this->table->updateState($table_id, $state);
 	}
 
+	public function store($id, $numero, $ubicacion, $pax){
+
+		return $this->table->store($id, $numero, $ubicacion, $pax);
+	}
 }
 
 ?>

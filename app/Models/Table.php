@@ -21,13 +21,37 @@ class Table extends Connection
 
         public function updateState($table_id, $state){
 		
-                $query =  "UPDATE mesas SET estado = $state WHERE id = $table_id";
+            $query =  "UPDATE mesas SET estado = $state WHERE id = $table_id";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $result = $stmt->execute();
+
+            return "ok";
+    }
+
+        public function store($id, $numero, $ubicacion, $pax){
+
+            if(!empty){
+                $query =  "INSERT mesas SET id = $id, numero = $numero, ubicacion = $ubicacion, pax = $pax";
                         
                 $stmt = $this->pdo->prepare($query);
                 $result = $stmt->execute();
+                $id = $this->pdo->lastInsertId();
+
+            } else{
+                $query =  "UPDATE mesas SET id = $id, numero = $numero, ubicacion = $ubicacion, pax = $pax";
+                        
+                $stmt = $this->pdo->prepare($query);
+                $result = $stmt->execute();
+                $id = $this->pdo->lastInsertId();
+
+            }
+		
+                
 
                 return "ok";
 	}
         
+
 }
 ?>

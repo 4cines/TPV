@@ -1,6 +1,8 @@
 export let renderSales = () => {
 
     let chargeTickets = document.querySelectorAll(".charge-ticket");
+    let ticketContainer = document.querySelector(".list-group");
+    let totals = document.querySelector(".totals");
 
     chargeTickets.forEach(chargeTicket => {
 
@@ -27,7 +29,18 @@ export let renderSales = () => {
                     return response.json();
                 })
                 .then(json => {
+                    let products = ticketContainer.querySelectorAll('li:not(.add-product-layout)');
 
+                    ticketContainer.querySelector('.no-products').classList.remove('d-none');
+    
+                    totals.querySelector('.iva-percent').innerHTML = '';
+                    totals.querySelector('.base').innerHTML = 0;
+                    totals.querySelector('.iva').innerHTML = 0;
+                    totals.querySelector('.total').innerHTML = 0;
+    
+                    products.forEach(product => {
+                        product.remove();
+                    });
                 })
                 .catch ( error =>  {
                     console.log(JSON.stringify(error));

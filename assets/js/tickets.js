@@ -2,7 +2,12 @@ export let renderTickets = () => {
 
     let deleteProducts = document.querySelectorAll(".delete-product");
     let deleteAllProducts = document.querySelector(".delete-all-products");
-    let chargeTicket = document.querySelector(".charge-ticket");
+    let ticketContainer = document.querySelector(".list-group");
+    let totals = document.querySelector(".totals");
+
+    document.addEventListener("renderTicket",( event =>{
+        renderTickets();
+    }), {once: true});
 
     deleteProducts.forEach(deleteProduct => {
 
@@ -14,7 +19,6 @@ export let renderTickets = () => {
                 data["route"] = 'deleteProduct';
                 data["ticket_id"] = deleteProduct.dataset.ticket;
                 data["table_id"] = deleteProduct.dataset.table;
-
     
                 let response = await fetch('web.php', {
                     headers: {
@@ -24,7 +28,6 @@ export let renderTickets = () => {
                     body: JSON.stringify(data)
                 })
                 .then(response => {
-                collectcharge
 
                     if (!response.ok) throw response;
     
@@ -32,6 +35,22 @@ export let renderTickets = () => {
                 })
                 .then(json => {
     
+                    deleteProduct.parentElement.remove();
+
+                    if(json.total == false){
+
+                        ticketContainer.querySelector('.no-products').classList.remove('d-none');
+                        totals.querySelector('.iva-percent').innerHTML = '';
+                        totals.querySelector('.base').innerHTML = 0;
+                        totals.querySelector('.iva').innerHTML = 0;
+                        totals.querySelector('.total').innerHTML = 0;
+                        
+                    }else{
+                        totals.querySelector('.iva-percent').innerHTML = json.total.iva;
+                        totals.querySelector('.base').innerHTML = json.total.base;
+                        totals.querySelector('.iva').innerHTML = json.total.total_iva;
+                        totals.querySelector('.total').innerHTML = json.total.total;
+                    }
                 })
                 .catch ( error =>  {
                     console.log(JSON.stringify(error));
@@ -65,6 +84,18 @@ export let renderTickets = () => {
             })
             .then(json => {
 
+                let products = ticketContainer.querySelectorAll('li:not(.add-product-layout)');
+
+                ticketContainer.querySelector('.no-products').classList.remove('d-none');
+
+                totals.querySelector('.iva-percent').innerHTML = '';
+                totals.querySelector('.base').innerHTML = 0;
+                totals.querySelector('.iva').innerHTML = 0;
+                totals.querySelector('.total').innerHTML = 0;
+
+                products.forEach(product => {
+                    product.remove();
+                });
             })
             .catch ( error =>  {
                 console.log(JSON.stringify(error));

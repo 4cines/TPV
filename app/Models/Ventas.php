@@ -35,16 +35,17 @@ class Ventas extends Connection
         return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
-    public function productos($mesa){
+    public function productos($venta){
 		
         $query =  "SELECT productos.imagen_url AS imagen_url, COUNT(tickets.venta_id) AS cantidad, SUM(precios.precio_base) AS precio_base, productos.nombre AS nombre, mesas.numero AS mesa
         FROM tickets 
-                INNER JOIN precios ON tickets.precio_id = precios.id 
-                INNER JOIN productos ON precios.producto_id = productos.id 
-                INNER JOIN mesas ON tickets.mesa_id = mesas.id 
-                WHERE tickets.activo=1 
-                AND tickets.mesa_id = $mesa
-                GROUP BY productos.id";
+        INNER JOIN precios ON tickets.precio_id = precios.id 
+        INNER JOIN productos ON precios.producto_id = productos.id 
+        INNER JOIN mesas ON tickets.mesa_id = mesas.id 
+		INNER JOIN ventas ON tickets.venta_id = ventas.id
+        WHERE tickets.activo= 1 
+		AND ventas.id = $venta
+        GROUP BY productos.id";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();

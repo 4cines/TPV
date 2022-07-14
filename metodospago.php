@@ -16,7 +16,7 @@
 <div class="modal-body">
     <div class="row align-items-center flex-column">
         <?php foreach($tipos_cobro as $tipo_cobro):?>
-            <div class="col-6 d-lg-flex m-2"><button class="charge-ticket btn btn-primary w-100" data-table= <?php echo $_GET['mesa'];?> data-metodopago="<?= $tipo_cobro['id'];?>" type="button"><?= $tipo_cobro["nombre"];?></button></div>
+            <div class="col-6 d-lg-flex m-2"><button class="charge-ticket btn btn-primary w-100" data-bs-dismiss="modal" data-table= <?php echo $_GET['mesa'];?> data-metodopago="<?= $tipo_cobro['id'];?>" type="button"><?= $tipo_cobro["nombre"];?></button></div>
         <?php endforeach;?>
     </div>
 </div>

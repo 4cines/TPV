@@ -18,6 +18,8 @@
 
     $ventas = $venta->index($mesa, $fecha);
 
+    
+
     if(isset($_GET['venta'])){
         $ticket = $venta->numero($_GET['venta']);
         $productos = $venta->productos($_GET['venta']);

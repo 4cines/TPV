@@ -1,5 +1,8 @@
 export let renderProducts = () => {
 
+    let ticketContainer = document.querySelector(".list-group");
+    let totals = document.querySelector(".totals");
+    let addProductLayout = document.querySelector(".add-product-layout");
     let addProducts = document.querySelectorAll(".add-product");
 
     addProducts.forEach(addProduct => {
@@ -27,7 +30,29 @@ export let renderProducts = () => {
                     return response.json();
                 })
                 .then(json => {
+
+                    let product = addProductLayout.cloneNode(true);
     
+                    product.querySelector('.delete-product').dataset.ticket = json.newProduct.id;
+                    product.querySelector('.img-ticket').src =  json.newProduct.imagen_url;
+                    product.querySelector('.categoria-prod').innerHTML =  json.newProduct.categoria;
+                    product.querySelector('.nombre-prod').innerHTML =  json.newProduct.nombre;
+                    product.querySelector('.precio-prod').innerHTML =  json.newProduct.precio_base;
+                    product.classList.remove('d-none', 'add-product-layout');
+    
+                    totals.querySelector('.iva-percent').innerHTML = json.total.iva;
+                    totals.querySelector('.base').innerHTML = json.total.base;
+                    totals.querySelector('.iva').innerHTML = json.total.total_iva;
+                    totals.querySelector('.total').innerHTML = json.total.total;
+    
+                    if(ticketContainer.querySelector('.no-products')){
+                        ticketContainer.querySelector('.no-products').classList.add('d-none');
+                        ticketContainer.appendChild(product);
+                    }else{
+                        ticketContainer.appendChild(product);
+                    }
+    
+                    document.dispatchEvent(new CustomEvent('renderTicket'));
                 })
                 .catch ( error =>  {
                     console.log(JSON.stringify(error));
