@@ -7,9 +7,9 @@ export let renderAdminForm = () => {
     let tableContainer = document.querySelector('tbody');
 
     if(createFormButton) {
-        
         createFormButton.addEventListener("click", (event) => {
             adminForm.reset(); // resetar el formulario para añadir una mesa, botón "añadir mesa" de la vista
+            document.getElementsByName('id')[0].value = '';
         });
     }
 
@@ -51,6 +51,7 @@ export let renderAdminForm = () => {
                         newElement.dataset.element = json.newElement.id; // el elemento creado le meto la id para poder localizarlo 
 
                         newElement.querySelector('.delete-table-button').dataset.id = json.newElement.id; // coger la id del clonado para poder eliminarlo
+                        newElement.querySelector('.edit-table-button').dataset.id = json.newElement.id; // coger la id del clonado para poder eliminarlo
 
                         Object.entries(json.newElement).forEach(([key, value]) => { 
                             // json.newElement es el ultimo registro de la tabla $query

@@ -37,14 +37,14 @@ class Ventas extends Connection
 
     public function productos($venta){
 		
-        $query =  "SELECT productos.imagen_url AS imagen_url, COUNT(tickets.venta_id) AS cantidad, SUM(precios.precio_base) AS precio_base, productos.nombre AS nombre, mesas.numero AS mesa
+        $query =  "SELECT productos.imagen_url AS imagen_url, COUNT(tickets.venta_id) AS cantidad, SUM(precios.precio_base) AS precio_base, productos.nombre AS nombre
         FROM tickets 
         INNER JOIN precios ON tickets.precio_id = precios.id 
         INNER JOIN productos ON precios.producto_id = productos.id 
         INNER JOIN mesas ON tickets.mesa_id = mesas.id 
 		INNER JOIN ventas ON tickets.venta_id = ventas.id
         WHERE tickets.activo= 1 
-		AND ventas.id = $venta
+		AND tickets.venta_id = $venta
         GROUP BY productos.id";
                 
         $stmt = $this->pdo->prepare($query);
@@ -82,8 +82,6 @@ class Ventas extends Connection
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
         $id = $this->pdo->lastInsertId();
-
-        file_put_contents("fichero1.txt",  $id);
 
         return $id;
     }

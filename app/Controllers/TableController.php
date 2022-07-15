@@ -28,6 +28,16 @@ class TableController {
 
 		return $this->table->store($id, $numero, $ubicacion, $pax);
 	}
+
+	public function show($id){
+
+		return $this->table->show($id);
+	}
+
+	public function delete($id){
+		
+		return $this->table->delete($id);
+	}
 }
 
 ?>

@@ -61,49 +61,53 @@ export let renderTickets = () => {
         }); 
     });
 
-    deleteAllProducts.addEventListener("click", (event) => {
+    if(deleteAllProducts){
         
-        let sendPostRequest = async () => { 
-            
-            let data = {};
-            data["route"] = 'deleteAllProducts';
-            data["table_id"] = deleteAllProducts.dataset.table;
-
-            let response = await fetch('web.php', {
-                headers: {
-                    'Accept': 'application/json',
-                },
-                method: 'DELETE',
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-            
-                if (!response.ok) throw response;
-
-                return response.json();
-            })
-            .then(json => {
-
-                let products = ticketContainer.querySelectorAll('li:not(.add-product-layout)');
-
-                ticketContainer.querySelector('.no-products').classList.remove('d-none');
-
-                totals.querySelector('.iva-percent').innerHTML = '';
-                totals.querySelector('.base').innerHTML = 0;
-                totals.querySelector('.iva').innerHTML = 0;
-                totals.querySelector('.total').innerHTML = 0;
-
-                products.forEach(product => {
-                    product.remove();
+        deleteAllProducts.addEventListener("click", (event) => {
+        
+            let sendPostRequest = async () => { 
+                
+                let data = {};
+                data["route"] = 'deleteAllProducts';
+                data["table_id"] = deleteAllProducts.dataset.table;
+    
+                let response = await fetch('web.php', {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'DELETE',
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                
+                    if (!response.ok) throw response;
+    
+                    return response.json();
+                })
+                .then(json => {
+    
+                    let products = ticketContainer.querySelectorAll('li:not(.add-product-layout)');
+    
+                    ticketContainer.querySelector('.no-products').classList.remove('d-none');
+    
+                    totals.querySelector('.iva-percent').innerHTML = '';
+                    totals.querySelector('.base').innerHTML = 0;
+                    totals.querySelector('.iva').innerHTML = 0;
+                    totals.querySelector('.total').innerHTML = 0;
+    
+                    products.forEach(product => {
+                        product.remove();
+                    });
+                })
+                .catch ( error =>  {
+                    console.log(JSON.stringify(error));
                 });
-            })
-            .catch ( error =>  {
-                console.log(JSON.stringify(error));
-            });
-        };
-
-        sendPostRequest();
-    }); 
-
+            };
+    
+            sendPostRequest();
+        }); 
+    
+    }
+ 
  
 };

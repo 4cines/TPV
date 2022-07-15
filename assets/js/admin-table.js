@@ -27,6 +27,9 @@ export let renderAdminTable = () => {
                 data["route"] = deleteTableModal.dataset.route;
                 data["id"] = deleteTableModal.dataset.id;
 
+                console.log(data['id']);
+               
+
                 let response = await fetch('web.php', {
                     headers: {
                         'Accept': 'application/json',

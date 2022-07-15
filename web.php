@@ -27,7 +27,6 @@
 
                 $newProduct = $ticket->addProduct($json->price_id, $json->table_id);
                 $totalPrice = $ticket->total($json->table_id);
-                file_put_contents('error.txt', $totalPrice);
                 $table->updateState($json->table_id, 0);
 
                 $response = array(
@@ -104,7 +103,6 @@
 
                 $table = new TableController();
                 $new_table = $table->store($json->id, $json->numero, $json->ubicacion, $json->pax); //datos del data (input en el .php)
-
                 $response = array(
                     'status' => 'ok',
                     'id' => $json->id, //la id no vale nada, value de .php es ""
@@ -119,6 +117,7 @@
 
                 $table = new TableController();
                 $table = $table->show($json->id);
+                
 
                 $response = array(
                     'status' => 'ok',

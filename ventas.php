@@ -114,7 +114,7 @@
 
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="date" name="fecha" value="" class="form-control">
+                                    <input type="date" name="fecha" value="<?php echo $fecha ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                     <select name="mesa" class="form-control">
                                         <option value=""> TODAS </option>
                                         <?php foreach($totalmesas as $totalmesa):?>
-                                            <option value="<?= $totalmesa['numero'];?>"><?= $totalmesa['numero'];?></option>
+                                            <option value="<?= $totalmesa['numero'];?>" <?= isset($_GET['mesa']) && $totalmesa['numero'] == $_GET['mesa'] ? 'selected' : '';?> ==  ><?= $totalmesa['numero'];?></option>
                                         <?php endforeach;?>
                                     </select>
                                 </div>
@@ -146,7 +146,7 @@
                     <div class="list-group">
                         <?php foreach($ventas as $venta):?>
                             <?php if(isset($_GET['venta'])):?>
-                                <a class="sale-item list-group-item list-group-item-action active" href="ventas.php?venta=<?php echo $venta['id']?>&fecha=<?php echo $fecha?>&mesa=<?php echo $mesa?>" aria-current="true">
+                                <a class="sale-item list-group-item list-group-item-action" href="ventas.php?venta=<?php echo $venta['id']?>&fecha=<?php echo $fecha?>&mesa=<?php echo $mesa?>" aria-current="true">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Ticket:<?php echo $venta['numero_ticket']?></h5>
                                         <small>Hora: <?php echo $venta['hora_emision']?></small>
@@ -169,7 +169,6 @@
                         <?php endforeach;?>
 
                     </div>
-
                     <div class="row mt-3">
                         <div class="col">
                             <div class="bg-secondary" id="refresh-price">

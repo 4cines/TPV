@@ -10,48 +10,69 @@ class Table extends Connection
 {
 	public function index(){
 		
-                $query =  "SELECT * FROM mesas WHERE activo = 1";
-                        
-                $stmt = $this->pdo->prepare($query);
-                $result = $stmt->execute();
+        $query =  "SELECT * FROM mesas WHERE activo = 1";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 
-        public function updateState($table_id, $state){
-		
-            $query =  "UPDATE mesas SET estado = $state WHERE id = $table_id";
+    public function updateState($table_id, $state){
+    
+        $query =  "UPDATE mesas SET estado = $state WHERE id = $table_id";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return "ok";
+    }
+
+    public function store($id, $numero, $ubicacion, $pax){
+
+        if(empty($id)){
+            $query =  "INSERT INTO mesas (numero, ubicacion, pax, estado, activo, creado, actualizado) VALUES ($numero,'$ubicacion',$pax, 1, 1, NOW(), NOW())";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();
 
-            return "ok";
+            $query =  "SELECT * FROM mesas WHERE id=".$this->pdo->lastInsertId();
+
+        } else{
+            $query =  "UPDATE mesas SET numero = $numero, ubicacion = '$ubicacion', pax = $pax WHERE id = $id";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $result = $stmt->execute();
+
+            $query =  "SELECT * FROM mesas WHERE id = $id";
+        }
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-        public function store($id, $numero, $ubicacion, $pax){
-
-            if(!empty){
-                $query =  "INSERT mesas SET id = $id, numero = $numero, ubicacion = $ubicacion, pax = $pax";
-                        
-                $stmt = $this->pdo->prepare($query);
-                $result = $stmt->execute();
-                $id = $this->pdo->lastInsertId();
-
-            } else{
-                $query =  "UPDATE mesas SET id = $id, numero = $numero, ubicacion = $ubicacion, pax = $pax";
-                        
-                $stmt = $this->pdo->prepare($query);
-                $result = $stmt->execute();
-                $id = $this->pdo->lastInsertId();
-
-            }
-		
+    public function show($id){
+    
+        $query =  "SELECT * FROM mesas WHERE activo = 1 AND id = $id";
                 
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
 
-                return "ok";
-	}
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
         
+    public function delete($id){
+    
+        $query =  "UPDATE mesas SET activo = 0 WHERE id = $id";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return "ok";
+    }
 
 }
 ?>
