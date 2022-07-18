@@ -18,6 +18,54 @@ class ProductCategory extends Connection
 
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	public function filtro()
+	{
+
+		$query =  "SELECT id, nombre FROM  productos_categorias WHERE activo = 1";
+				
+		$stmt = $this->pdo->prepare($query);
+		$result = $stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function store($id, $nombre){
+
+        if(empty($id)){
+            $query =  "INSERT INTO productos_categorias (nombre, activo, creado, actualizado) VALUES ('$nombre', 1, NOW(), NOW())";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $result = $stmt->execute();
+
+            $query =  "SELECT * FROM productos_categorias WHERE id=".$this->pdo->lastInsertId();
+
+        } else{
+            $query =  "UPDATE productos_categorias SET nombre = '$nombre', actualizado = NOW() WHERE id = $id";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $result = $stmt->execute();
+
+            $query =  "SELECT * FROM productos_categorias WHERE id = $id";
+        }
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+		public function show($id){
+    
+			$query =  "SELECT * FROM productos_categorias WHERE activo = 1 AND id = $id";
+					
+			$stmt = $this->pdo->prepare($query);
+			$result = $stmt->execute();
+	
+			return $stmt->fetch(PDO::FETCH_ASSOC);
+		}
+    }
+
+
 }
 
 ?>

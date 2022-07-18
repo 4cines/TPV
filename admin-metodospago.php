@@ -1,11 +1,11 @@
 <?php
 
-	require_once 'app/Controllers/TableController.php';
+	require_once 'app/Controllers/MetodosPagoController.php';
 
-	use app\Controllers\TableController;
+	use app\Controllers\MetodosPagoController;
 
-	$table = new TableController();
-	$tables = $table->index();
+	$metodo_pago = new MetodosPagoController();
+	$metodos_pagos = $metodo_pago->index();
 
 ?>
 
@@ -31,13 +31,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center mt-3 border titular"><small class="small-admin">PANEL DE ADMINISTRACIÓN</small> </br> MESAS</h1>
+                <h1 class="text-center mt-3 border titular"><small class="small-admin">PANEL DE ADMINISTRACIÓN</small> </br> METODOS DE PAGO</h1>
             </div>
             <div class="col-12 mt-5">
                 <section>
                     <div class="row">
                         <div class="col d-flex justify-content-end">
-                            <button type="button" class="create-form-button btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addArticle">+ Añadir mesa</button>
+                            <button type="button" class="create-form-button btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addArticle">+ Añadir metodo de pago</button>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -45,30 +45,22 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                    <th scope="col">Nº mesa</th>
-                                    <th scope="col">Ubicación</th>
-                                    <th scope="col">Nº Comensales</th>
+                                    <th scope="col">Nombre</th>
                                     <th scope="col">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($tables as $table): ?>
-                                        <tr class="table-element" data-element="<?= $table['id'] ?>">
+                                    <?php foreach($metodos_pagos as $metodos_pago): ?>
+                                        <tr class="table-element" data-element="<?= $metodos_pago['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
-                                            <th scope="row" class="numero">
-                                                <?= $table['numero'] ?>
+                                            <th scope="row" class="nombre">
+                                                <?= $metodos_pago['nombre'] ?>
                                             </th>
-                                            <td class="ubicacion">
-                                                <?= $table['ubicacion'] ?>
-                                            </td>
-                                            <td class="pax">
-                                                <?= $table['pax'] ?>
-                                            </td>
                                             <td class="opciones">
-                                                <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="<?= $table['id'] ?>" data-route="showTable" data-bs-target="#addArticle">
+                                                <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="<?= $metodos_pago['id'] ?>" data-route="showPay" data-bs-target="#addArticle">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="delete-table-button btn btn-danger" data-id="<?= $table['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteArticle">
+                                                <button type="button" class="delete-table-button btn btn-danger" data-id="<?= $metodos_pago['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteArticle">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </td>
@@ -76,11 +68,9 @@
                                     <?php endforeach; ?>
 
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
-                                        <th scope="row" class="numero"></th>
-                                        <td class="ubicacion"></td>
-                                        <td class="pax"></td>
+                                        <th scope="row" class="nombre"></th>
                                         <td class="opciones">
-                                            <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showTable" data-bs-target="#addArticle">
+                                            <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showPay" data-bs-target="#addArticle">
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                             <button type="button" class="delete-table-button btn btn-danger" data-id="" data-bs-toggle="modal" data-bs-target="#deleteArticle">
@@ -124,40 +114,16 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addArticleLabel">AÑADIR MESA</h5>
+                    <h5 class="modal-title" id="addArticleLabel">AÑADIR METODO DE PAGO</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="admin-form" data-route="storeTable"> 
+                    <form class="admin-form" data-route="storePay"> 
                          <!-- empieza el formulario, data, cuando se envia saber donde gestionar el formulario -> web.php-->
                         <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
                         <div class="mb-3">
-                            <label for="numero" class="form-label">Número de mesa</label>
-                            <input type="number" class="form-control" name="numero" value="">
-                        </div>
-                        <div class="mb-3">
-                            <label for="ubicacion" class="form-label">Ubicación</label>
-                            <select class="form-select" aria-label="Default select example" name="ubicacion">
-                                <option selected>Selecciona ubicación</option>
-                                <option value="local">Local</option>
-                                <option value="terraza">Terraza</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pax" class="form-label">Número de comensales</label>
-                            <select class="form-select" aria-label="Default select example" name="pax">
-                                <option selected>Selecciona número de comensales</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+                            <label for="nombre" class="form-label">Método de pago</label>
+                            <input type="name" class="form-control" name="nombre" value="">
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-secondary mt-3 me-2" data-bs-dismiss="modal">CERRAR</button>
@@ -175,15 +141,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR MESA <?php echo $table['numero'];?></h5>
+                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR METODO DE PAGO</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center text-muted">Está a punto de borrar una mesa. ¿Está completamente seguro de realizar esta acción?</p>
+                    <p class="text-center text-muted">Está a punto de borrar este método de pago. ¿Está completamente seguro de realizar esta acción?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
-                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deleteTable">ELIMINAR</button>
+                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deletePay">ELIMINAR</button>
                 </div>
             </div>
         </div>

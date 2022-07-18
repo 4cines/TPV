@@ -3,10 +3,16 @@
     require_once 'app/Controllers/TicketController.php';
     require_once 'app/Controllers/TableController.php';
     require_once 'app/Controllers/VentasController.php';
+    require_once 'app/Controllers/TiposIvaController.php';
+    require_once 'app/Controllers/MetodosPagoController.php';
+    require_once 'app/Controllers/ProductCategoryController.php';
   
     use app\Controllers\TicketController;
     use app\Controllers\TableController;
     use app\Controllers\VentasController;
+    use app\Controllers\TiposIvaController;
+    use app\Controllers\MetodosPagoController;
+    use app\Controllers\ProductCategoryController;
 
     header("Content-Type: application/json"); // lo que va a recibir es un JSON
 
@@ -37,7 +43,7 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
 
             case 'deleteProduct':
                 
@@ -58,7 +64,7 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
 
             case 'deleteAllProducts':
             
@@ -74,7 +80,7 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
 
             case 'chargeTicket':
 
@@ -97,7 +103,9 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
+
+             // MESAS
 
             case 'storeTable':
 
@@ -111,7 +119,7 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
             
             case 'showTable':
 
@@ -126,7 +134,7 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
             
             case 'deleteTable':
 
@@ -140,13 +148,144 @@
 
                 echo json_encode($response);
 
-                break;
+            break;
 
+         //// TIPOS IVA
+
+            case 'storeTax':
+
+                $tipoiva = new TiposIvaController();
+                $new_iva = $tipoiva->store($json->id, $json->tipo, $json->vigente); //datos del data (input en el .php)
+                
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id, //la id no vale nada, value de .php es ""
+                    'newElement' => $new_iva // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                );
+
+                echo json_encode($response);
+
+            break;
+            
+            case 'showTax':
+
+                $tipoiva = new TiposIvaController();
+                $tipoiva = $tipoiva->show($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $tipoiva,
+                );
+
+                echo json_encode($response);
+
+            break;
+            
+            case 'deleteTax':
+
+                $tipoiva = new TiposIvaController();
+                $tipoiva->delete($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id
+                );
+
+                echo json_encode($response);
+
+            break;
+
+         // METODOS DE PAGO
+
+            case 'storePay':
+
+                $metodo_pago = new MetodosPagoController();
+                $new_pay = $metodo_pago->store($json->id, $json->nombre); //datos del data (input en el .php)
+           
+                $response = array(
+                'status' => 'ok',
+                'id' => $json->id, //la id no vale nada, value de .php es ""
+                'newElement' => $new_pay // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                );
+
+                echo json_encode($response);
+
+            break;
+        
+            case 'showPay':
+
+                $metodo_pago = new MetodosPagoController();
+                $metodo_pago = $metodo_pago->show($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $metodo_pago,
+                );
+
+                echo json_encode($response);
+
+            break;
+        
+            case 'deletePay':
+
+                $metodo_pago = new MetodosPagoController();
+                $metodo_pago->delete($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id
+                );
+
+                echo json_encode($response);
+
+            break;  
+
+
+            //categorias
+        
+            case 'storeProductCategory':
+
+                $product_category = new ProductCategoryController();
+                $new_category = $product_category->store($json->id, $json->nombre); //datos del data (input en el .php)
+           
+                $response = array(
+                'status' => 'ok',
+                'id' => $json->id, //la id no vale nada, value de .php es ""
+                'newElement' => $new_category // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                );
+
+                echo json_encode($response);
+
+            break;
+        
+            // case 'showProductCategory':
+
+            //     $product_category = new ProductCategoryController();
+            //     $category = $product_category->show($json->id);
+
+            //     $response = array(
+            //         'status' => 'ok',
+            //         'element' => $category,
+            //     );
+
+            //     echo json_encode($response);
+
+            // break;
+        
+            // case 'deletePay':
+
+            // $metodo_pago = new MetodosPagoController();
+            // $metodo_pago->delete($json->id);
+
+            // $response = array(
+            //     'status' => 'ok',
+            //     'id' => $json->id
+            // );
+
+            // echo json_encode($response);
+
+            // break;  
         }
-
-    } else {
-        echo json_encode(array('error' => 'No action'));
-    }    
-
+    }
 
 ?>

@@ -25,7 +25,7 @@ export let renderAdminForm = () => {
                 let formData = new FormData(adminForm); // formData: objeto nativo de JS y por () indicas el formulario. Después hay que pasar el formData a JSON para el servidor
                 formData.append("route", adminForm.dataset.route); // = data["route"] = 'addProduct'; 
 
-                formData.forEach(function(value, key){ //transformaos el FormData a JSON 
+                formData.forEach(function(value, key){ //transformamos el FormData a JSON 
                     data[key] = value; // se le crea un bucle para que le adjudique una clave (campo bbdd) a cada valor (valor a introducir)
                 });
 
