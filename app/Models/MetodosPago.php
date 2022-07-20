@@ -29,7 +29,7 @@ class MetodosPago extends Connection
             $query =  "SELECT * FROM metodos_pagos WHERE id=".$this->pdo->lastInsertId();
 
         } else{
-            $query =  "UPDATE metodos_pagos SET nombre = '$nombre' WHERE id = $id";
+            $query =  "UPDATE metodos_pagos SET nombre = '$nombre', actualizado = NOW() WHERE id = $id";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();
@@ -56,7 +56,7 @@ class MetodosPago extends Connection
         
     public function delete($id){
     
-        $query =  "UPDATE metodos_pagos SET activo = 0 WHERE id = $id";
+        $query =  "UPDATE metodos_pagos SET activo = 0, actualizado = NOW() WHERE id = $id";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();

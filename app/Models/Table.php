@@ -40,7 +40,7 @@ class Table extends Connection
             $query =  "SELECT * FROM mesas WHERE id=".$this->pdo->lastInsertId();
 
         } else{
-            $query =  "UPDATE mesas SET numero = $numero, ubicacion = '$ubicacion', pax = $pax WHERE id = $id";
+            $query =  "UPDATE mesas SET numero = $numero, ubicacion = '$ubicacion', pax = $pax, actualizado = NOW() WHERE id = $id";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();
@@ -66,7 +66,7 @@ class Table extends Connection
         
     public function delete($id){
     
-        $query =  "UPDATE mesas SET activo = 0 WHERE id = $id";
+        $query =  "UPDATE mesas SET activo = 0, actualizado = NOW() WHERE id = $id";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();

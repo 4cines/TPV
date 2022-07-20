@@ -6,6 +6,7 @@
     require_once 'app/Controllers/TiposIvaController.php';
     require_once 'app/Controllers/MetodosPagoController.php';
     require_once 'app/Controllers/ProductCategoryController.php';
+    require_once 'app/Controllers/ProductController.php';
   
     use app\Controllers\TicketController;
     use app\Controllers\TableController;
@@ -13,6 +14,7 @@
     use app\Controllers\TiposIvaController;
     use app\Controllers\MetodosPagoController;
     use app\Controllers\ProductCategoryController;
+    use app\Controllers\ProductController;
 
     header("Content-Type: application/json"); // lo que va a recibir es un JSON
 
@@ -258,33 +260,78 @@
 
             break;
         
-            // case 'showProductCategory':
+            case 'showProductCategory':
 
-            //     $product_category = new ProductCategoryController();
-            //     $category = $product_category->show($json->id);
+                $product_category = new ProductCategoryController();
+                $category = $product_category->show($json->id);
 
-            //     $response = array(
-            //         'status' => 'ok',
-            //         'element' => $category,
-            //     );
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $category,
+                );
 
-            //     echo json_encode($response);
+                echo json_encode($response);
 
-            // break;
+            break;
         
-            // case 'deletePay':
+            case 'deleteCategory':
 
-            // $metodo_pago = new MetodosPagoController();
-            // $metodo_pago->delete($json->id);
+            $product_category = new ProductCategoryController();
+            $product_category->delete($json->id);
 
-            // $response = array(
-            //     'status' => 'ok',
-            //     'id' => $json->id
-            // );
+            $response = array(
+                'status' => 'ok',
+                'id' => $json->id
+            );
 
-            // echo json_encode($response);
+            echo json_encode($response);
 
-            // break;  
+            break;  
+
+            // PRODUCTOS
+
+            case 'storeProduct':
+
+                $product = new TableController();
+                $new_product = $product->store($json->id, $json->nombre, $json->categoria_id, $json->visible); //datos del data (input en el .php)
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id, //la id no vale nada, value de .php es ""
+                    'newElement' => $new_product // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                );
+
+                echo json_encode($response);
+
+            break;
+            
+            case 'showProduct':
+
+                $product = new TableController();
+                $products = $product->show($json->id);
+                
+
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $products,
+                );
+
+                echo json_encode($response);
+
+            break;
+            
+            case 'deleteProduct':
+
+                $product = new TableController();
+                $product->delete($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id
+                );
+
+                echo json_encode($response);
+
+            break;
         }
     }
 

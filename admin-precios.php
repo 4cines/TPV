@@ -1,16 +1,11 @@
 <?php
 
-	require_once 'app/Controllers/ProductController.php';
-    require_once 'app/Controllers/ProductCategoryController.php';
+	require_once 'app/Controllers/TableController.php';
 
-	use app\Controllers\ProductController;
-    use app\Controllers\ProductCategoryController;
+	use app\Controllers\TableController;
 
-	$producto = new ProductController();
-	$productos = $producto->paneladmin();
-
-    $categoria = new ProductCategoryController();
-	$categorias = $categoria->index();
+	$table = new TableController();
+	$tables = $table->index();
 
 ?>
 
@@ -36,13 +31,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center mt-3 border titular"><small class="small-admin">PANEL DE ADMINISTRACIÓN</small> </br> PRODUCTOS</h1>
+                <h1 class="text-center mt-3 border titular"><small class="small-admin">PANEL DE ADMINISTRACIÓN</small> </br> MESAS</h1>
             </div>
             <div class="col-12 mt-5">
                 <section>
                     <div class="row">
                         <div class="col d-flex justify-content-end">
-                            <button type="button" class="create-form-button btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addArticle">+ Añadir producto</button>
+                            <button type="button" class="create-form-button btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addArticle">+ Añadir mesa</button>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -50,30 +45,30 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Categoria_id</th>
-                                    <th scope="col">Visible</th>
+                                    <th scope="col">Nº mesa</th>
+                                    <th scope="col">Ubicación</th>
+                                    <th scope="col">Nº Comensales</th>
                                     <th scope="col">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($productos as $producto): ?>
-                                        <tr class="table-element" data-element="<?= $producto['id'] ?>">
+                                    <?php foreach($tables as $table): ?>
+                                        <tr class="table-element" data-element="<?= $table['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
-                                            <th scope="row" class="nombre">
-                                                <?= $producto['nombre'] ?>
+                                            <th scope="row" class="numero">
+                                                <?= $table['numero'] ?>
                                             </th>
-                                            <td class="categoria_id">
-                                                <?= $producto['categoria_id'] ?>
+                                            <td class="ubicacion">
+                                                <?= $table['ubicacion'] ?>
                                             </td>
-                                            <td class="visible">
-                                                <?= $producto['visible'] ?>
+                                            <td class="pax">
+                                                <?= $table['pax'] ?>
                                             </td>
                                             <td class="opciones">
-                                                <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="<?= $producto['id'] ?>" data-route="showProduct" data-bs-target="#addArticle">
+                                                <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="<?= $table['id'] ?>" data-route="showTable" data-bs-target="#addArticle">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="delete-table-button btn btn-danger" data-id="<?= $producto['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteArticle">
+                                                <button type="button" class="delete-table-button btn btn-danger" data-id="<?= $table['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteArticle">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </td>
@@ -81,11 +76,11 @@
                                     <?php endforeach; ?>
 
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
-                                        <th scope="row" class="nombre"></th>
-                                        <td class="categoria_id"></td>
-                                        <td class="visible"></td>
+                                        <th scope="row" class="numero"></th>
+                                        <td class="ubicacion"></td>
+                                        <td class="pax"></td>
                                         <td class="opciones">
-                                            <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showProduct" data-bs-target="#addArticle">
+                                            <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showTable" data-bs-target="#addArticle">
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                             <button type="button" class="delete-table-button btn btn-danger" data-id="" data-bs-toggle="modal" data-bs-target="#deleteArticle">
@@ -129,30 +124,39 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addArticleLabel">AÑADIR PRODUCTO</h5>
+                    <h5 class="modal-title" id="addArticleLabel">AÑADIR MESA</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="admin-form" data-route="storeProduct"> 
+                    <form class="admin-form" data-route="storeTable"> 
                          <!-- empieza el formulario, data, cuando se envia saber donde gestionar el formulario -> web.php-->
                         <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre producto</label>
-                            <input type="name" class="form-control" name="nombre" value="">
+                            <label for="numero" class="form-label">Número de mesa</label>
+                            <input type="number" class="form-control" name="numero" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="categoria_id" class="form-label">Categoria asociada</label>
-                            <select class="form-select" aria-label="Default select example" name="categoria_id">
-                                <option selected>Selecciona una opción</option>
-                                <option value="<?php echo $categoria['nombre'];?>"></option>
+                            <label for="ubicacion" class="form-label">Ubicación</label>
+                            <select class="form-select" aria-label="Default select example" name="ubicacion">
+                                <option selected>Selecciona ubicación</option>
+                                <option value="local">Local</option>
+                                <option value="terraza">Terraza</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="visible" class="form-label">Visible</label>
-                            <select class="form-select" aria-label="Default select example" name="visible">
-                                <option selected>Selecciona una opción</option>
-                                <option value="1">Sí</option>
-                                <option value="2">No</option>
+                            <label for="pax" class="form-label">Número de comensales</label>
+                            <select class="form-select" aria-label="Default select example" name="pax">
+                                <option selected>Selecciona número de comensales</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -171,15 +175,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR PRODUCTO <?php echo $producto['nombre'];?></h5>
+                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR MESA <?php echo $table['numero'];?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center text-muted">Está a punto de borrar un producto. ¿Está completamente seguro de realizar esta acción?</p>
+                    <p class="text-center text-muted">Está a punto de borrar una mesa. ¿Está completamente seguro de realizar esta acción?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
-                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deleteProduct">ELIMINAR</button>
+                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deleteTable">ELIMINAR</button>
                 </div>
             </div>
         </div>

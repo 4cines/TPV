@@ -63,6 +63,15 @@ class ProductCategory extends Connection
 	
 			return $stmt->fetch(PDO::FETCH_ASSOC);
 		}
+
+		public function delete($id){
+    
+			$query =  "UPDATE productos_categorias SET activo = 0, actualizado = NOW() WHERE id = $id";
+					
+			$stmt = $this->pdo->prepare($query);
+			$result = $stmt->execute();
+	
+			return "ok";
     }
 
 

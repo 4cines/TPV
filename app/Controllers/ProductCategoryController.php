@@ -29,6 +29,10 @@ class ProductCategoryController {
 	public function show($id){
 		return $this->product_category->show($id);
 	}
+
+	public function delete($id){
+		return $this->product_category->delete($id);
+	}
 }
 
 ?>
