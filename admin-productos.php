@@ -2,15 +2,20 @@
 
 	require_once 'app/Controllers/ProductController.php';
     require_once 'app/Controllers/ProductCategoryController.php';
+    require_once 'app/Controllers/TiposIvaController.php';
 
 	use app\Controllers\ProductController;
     use app\Controllers\ProductCategoryController;
+    use app\Controllers\TiposIvaController;
 
 	$producto = new ProductController();
-	$productos = $producto->paneladmin();
+	$productos = $producto->index();
 
     $categoria = new ProductCategoryController();
-	$categorias = $categoria->index();
+	$categorias = $categoria->todaslascategorias();
+
+    $tipoiva = new TiposIvaController();
+	$tiposiva = $tipoiva->index();
 
 ?>
 
@@ -51,13 +56,15 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Categoria_id</th>
+                                    <th scope="col">Categoria </th>
+                                    <th scope="col">Tipo IVA</th>
+                                    <th scope="col">Precio Base </th>
                                     <th scope="col">Visible</th>
                                     <th scope="col">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($productos as $producto): ?>
+                                <?php foreach($productos as $producto): ?>
                                         <tr class="table-element" data-element="<?= $producto['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
                                             <th scope="row" class="nombre">
@@ -65,6 +72,12 @@
                                             </th>
                                             <td class="categoria_id">
                                                 <?= $producto['categoria_id'] ?>
+                                            </td>
+                                            <td class="tipo_iva">
+                                                <?= $producto['tipo_iva'] ?> %
+                                            </td>
+                                            <td class="precio_base">
+                                                <?= $producto['precio_base'] ?> € 
                                             </td>
                                             <td class="visible">
                                                 <?= $producto['visible'] ?>
@@ -79,10 +92,11 @@
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
-
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
                                         <th scope="row" class="nombre"></th>
                                         <td class="categoria_id"></td>
+                                        <td class="tipo_iva"></td>
+                                        <td class="precio_base"></td>
                                         <td class="visible"></td>
                                         <td class="opciones">
                                             <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showProduct" data-bs-target="#addArticle">
@@ -141,18 +155,33 @@
                             <input type="name" class="form-control" name="nombre" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="categoria_id" class="form-label">Categoria asociada</label>
+                            <label for="categoria_id" class="form-label">Categoría asociada</label>
                             <select class="form-select" aria-label="Default select example" name="categoria_id">
                                 <option selected>Selecciona una opción</option>
-                                <option value="<?php echo $categoria['nombre'];?>"></option>
+                                <?php foreach($categorias as $categoria):?>
+                                <option value="<?php echo $categoria['nombre']?>"><?php echo $categoria['nombre']?></option>
+                                <?php endforeach ;?>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo_iva" class="form-label">Tipo IVA</label>
+                            <select class="form-select" aria-label="Default select example" name="tipo_iva">
+                                <option selected>Selecciona una opción</option>
+                                <?php foreach($tiposiva as $tipoiva):?>
+                                <option value="<?php echo $tipoiva['tipo']?>"><?php echo $tipoiva['tipo']?></option>
+                                <?php endforeach ;?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precio_base" class="form-label">Precio Base</label>
+                            <input type="precio_base" class="form-control" name="precio_base" value="">
                         </div>
                         <div class="mb-3">
                             <label for="visible" class="form-label">Visible</label>
                             <select class="form-select" aria-label="Default select example" name="visible">
                                 <option selected>Selecciona una opción</option>
                                 <option value="1">Sí</option>
-                                <option value="2">No</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -171,7 +200,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR PRODUCTO <?php echo $producto['nombre'];?></h5>
+                    <h5 class="modal-title" id="deleteArticleLabel">ELIMINAR PRODUCTO</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -179,7 +208,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
-                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deleteProduct">ELIMINAR</button>
+                    <button type="button" class="delete-table-modal btn btn-primary" data-bs-dismiss="modal" data-route="deleteProductPrice">ELIMINAR</button>
                 </div>
             </div>
         </div>

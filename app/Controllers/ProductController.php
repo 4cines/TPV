@@ -15,7 +15,7 @@ class ProductController {
 		$this->producto = new Product();
 	}
 
-	public function index($categoria){
+	public function indexbycategory($categoria){
 
 		return $this->producto->index($categoria);
 	}
@@ -24,20 +24,20 @@ class ProductController {
 		return $this->producto->nombre($categoria);
 	}
 
-	public function paneladmin(){
-		return $this->producto->paneladmin();
+	public function index(){
+		return $this->producto->index();
 	}
 
-	public function store($id, $nombre, $categoria_id, $visible){
-		return $this->productostore($id, $nombre, $categoria_id, $visible);
+	public function store($id, $nombre, $categoria_id){
+		return $this->producto->store($id, $nombre, $categoria_id);
 	}
 
 	public function show($id){
-		return $this->show($id);
+		return $this->producto->show($id);
 	}
 
 	public function delete($id){
-		return $this->delete($id);
+		return $this->producto->delete($id);
 	}
 }
 

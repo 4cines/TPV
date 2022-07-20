@@ -60,8 +60,8 @@
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a class="dropdown-item" href="admin-mesas.php?panel=2">Mesas</a></li>
-								<li><a class="dropdown-item" href="#">Categorías</a></li>
-								<li><a class="dropdown-item" href="#">Productos</a></li>
+								<li><a class="dropdown-item" href="admin-categorias.php?panel=2">Categorías</a></li>
+								<li><a class="dropdown-item" href="admin-productos.php?panel=2">Productos</a></li>
 								<li><a class="dropdown-item" href="admin-tiposiva.php?panel=2">Tipos de IVA</a></li>
 								<li><a class="dropdown-item" href="admin-metodospago.php?panel=2">Métodos de pago</a></li>
 								<li><a class="dropdown-item" href="#">Ubicaciones</a></li>

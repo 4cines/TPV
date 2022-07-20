@@ -18,6 +18,10 @@ class ProductCategoryController {
 		return $this->product_category->index();
 	}
 
+	public function todaslascategorias(){
+		return $this->product_category->todaslascategorias();
+	}
+
 	public function filtro(){
 		return $this->product_category->filtro();
 	}

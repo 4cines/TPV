@@ -5,7 +5,7 @@
 	use app\Controllers\ProductController;
 
 	$producto = new ProductController();
-	$productos = $producto->index($_GET['categoria']);
+	$productos = $producto->indexbycategory($_GET['categoria']);
     $categorianombre = $producto->nombre($_GET['categoria'])
 
 ?>

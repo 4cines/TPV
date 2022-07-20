@@ -66,7 +66,6 @@
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
-
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
                                         <th scope="row" class="nombre"></th>
                                         <td class="opciones">
