@@ -16,6 +16,8 @@
     
     // // operadores de asignación
 
+
+    
     // $numero = 1;
     // $numero += 1;
     // $numero -= 1;
