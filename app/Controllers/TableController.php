@@ -19,6 +19,10 @@ class TableController {
 		return $this->table->index();
 	}
 
+	public function ubicacion(){
+		return $this->table->ubicacion();
+	}
+
 	public function updateState($table_id, $state){
 
 		return $this->table->updateState($table_id, $state);

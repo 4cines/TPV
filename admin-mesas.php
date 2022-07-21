@@ -6,6 +6,7 @@
 
 	$table = new TableController();
 	$tables = $table->index();
+    $ubicaciones = $table->ubicacion();
 
 ?>
 
@@ -139,8 +140,9 @@
                             <label for="ubicacion" class="form-label">Ubicación</label>
                             <select class="form-select" aria-label="Default select example" name="ubicacion">
                                 <option selected>Selecciona ubicación</option>
-                                <option value="local">Local</option>
-                                <option value="terraza">Terraza</option>
+                                <?php foreach($ubicaciones as $ubicacion):?>
+                                <option value="<?php echo $ubicacion['ubicacion']?>"><?php echo $ubicacion['ubicacion']?></option>
+                                <?php endforeach ;?>
                             </select>
                         </div>
                         <div class="mb-3">

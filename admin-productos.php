@@ -159,7 +159,7 @@
                             <select class="form-select" aria-label="Default select example" name="categoria_id">
                                 <option selected>Selecciona una opción</option>
                                 <?php foreach($categorias as $categoria):?>
-                                <option value="<?php echo $categoria['nombre']?>"><?php echo $categoria['nombre']?></option>
+                                <option value="<?php echo $categoria['id']?>"><?php echo $categoria['nombre']?></option>
                                 <?php endforeach ;?>
                             </select>
                         </div>
@@ -168,7 +168,7 @@
                             <select class="form-select" aria-label="Default select example" name="tipo_iva">
                                 <option selected>Selecciona una opción</option>
                                 <?php foreach($tiposiva as $tipoiva):?>
-                                <option value="<?php echo $tipoiva['tipo']?>"><?php echo $tipoiva['tipo']?></option>
+                                <option value="<?php echo $tipoiva['id']?>"><?php echo $tipoiva['tipo']?></option>
                                 <?php endforeach ;?>
                             </select>
                         </div>

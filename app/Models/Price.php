@@ -8,16 +8,22 @@ use core\Connection;
 
 class Price extends Connection 
 {
-    public function store($tipo_iva, $precio_base, $new_product_id){
+    public function store($new_product_id, $tipo_iva, $precio_base){
         if(empty($id)){
             $query =  "INSERT INTO precios (producto_id, iva_id, precio_base, vigente, activo, creado, actualizado) VALUES ($new_product_id, $tipo_iva, $precio_base, 1, 1, NOW(), NOW())";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();
-        
+
             $query =  "SELECT * FROM precios WHERE id=".$this->pdo->lastInsertId();
 
         } else{
+            $query =  "UPDATE productos SET nombre = '$nombre', categoria_id = $categoria_id, actualizado = NOW() WHERE id = $id";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $result = $stmt->execute();
+
+            $query =  "SELECT * FROM productos WHERE id = $id";
         }
 
         $stmt = $this->pdo->prepare($query);

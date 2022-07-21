@@ -18,6 +18,16 @@ class Table extends Connection
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+    public function ubicacion(){
+		
+        $query =  "SELECT ubicacion FROM mesas WHERE activo = 1 GROUP BY ubicacion";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
     public function updateState($table_id, $state){
     

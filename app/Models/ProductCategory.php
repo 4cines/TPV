@@ -22,7 +22,7 @@ class ProductCategory extends Connection
 	public function todaslascategorias()
 	{
 
-		$query =  "SELECT * FROM productos_categorias WHERE activo = 1		";
+		$query =  "SELECT id, nombre, imagen_url, activo FROM productos_categorias WHERE activo = 1";
 				
 		$stmt = $this->pdo->prepare($query);
 		$result = $stmt->execute();

@@ -14,8 +14,8 @@ class PriceController {
 		$this->price= new Price();
 	}
 
-    public function store($tipo_iva, $precio_base, $new_product_id){
-		return $this->price->store($tipo_iva, $precio_base, $new_product_id);
+    public function store($new_product_id, $tipo_iva, $precio_base){
+		return $this->price->store($new_product_id, $tipo_iva, $precio_base);
 	}
 
 	public function delete($id){

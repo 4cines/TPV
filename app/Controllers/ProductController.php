@@ -17,7 +17,7 @@ class ProductController {
 
 	public function indexbycategory($categoria){
 
-		return $this->producto->index($categoria);
+		return $this->producto->indexbycategory($categoria);
 	}
 
 	public function nombre($categoria){
@@ -30,6 +30,10 @@ class ProductController {
 
 	public function store($id, $nombre, $categoria_id){
 		return $this->producto->store($id, $nombre, $categoria_id);
+	}
+
+	public function lastproduct(){
+		return $this->producto->lastproduct();
 	}
 
 	public function show($id){

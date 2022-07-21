@@ -300,8 +300,8 @@
                 $product = new ProductController();
                 $price = new PriceController();
                 $new_product = $product->store($json->id, $json->nombre, $json->categoria_id);
-                file_put_contents
-                // $new_price =$price->store($json->tipo_iva, $json->precio_base, $new_product_id);
+                $new_product_id = $product->lastproduct();
+                $new_price = $price->store($new_product_id, $json->tipo_iva, $json->precio_base);
                 $response = array(
                     'status' => 'ok',
                     'id' => $json->id, //la id no vale nada, value de .php es ""
