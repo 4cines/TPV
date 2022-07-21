@@ -26,8 +26,8 @@ class ProductCategoryController {
 		return $this->product_category->filtro();
 	}
 
-	public function store($id, $nombre){
-		return $this->product_category->store($id, $nombre);
+	public function store($id, $nombre, $image_url){
+		return $this->product_category->store($id, $nombre, $image_url);
 	}
 
 	public function show($id){

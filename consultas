@@ -1,0 +1,29 @@
+Realizar las siguientes consultas, entre paréntesis  se define qué alias se debe utilizar en la consulta para cada campo:
+
+- Cuantas ventas se han realizado (quantity) en cada franja de hora (labels) y cuanto dinero se ha ingresado (data)
+
+    SELECT HOUR(hora_emision) AS labels , COUNT(*) AS quantity, SUM(precio_total) AS data
+    FROM ventas
+    GROUP BY HOUR(hora_emision) ORDER BY HOUR(hora_emision) ASC
+
+- Cuantas ventas se han realizado (quantity) en cada franja de día (labels) y cuanto dinero se ha ingresado (data)
+
+
+- Cuantas ventas se han realizado (quantity) en cada franja de mes (labels) y cuanto dinero se ha ingresado (data)
+
+
+- Cuantas ventas se han realizado (quantity) en cada franja de año (labels) y cuanto dinero se ha ingresado (data)
+
+
+- Cuantas ventas se han realizado (data) con cada método de pago (labels)
+
+
+- Qué categorías de productos (labels) aportan más ingresos (data)
+
+
+- Cuales son los productos que no son bebidas (labels) más vendidos (data)
+
+
+- Cuales son los productos que son bebidas (labels) más vendidos (data)
+
+- Tiempo medio que se está en la mesa

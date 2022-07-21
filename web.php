@@ -252,7 +252,14 @@
             case 'storeProductCategory':
 
                 $product_category = new ProductCategoryController();
-                $new_category = $product_category->store($json->id, $json->nombre); //datos del data (input en el .php)
+
+                if(isset($json->imagen_url->name)){
+                    $image_url = "/upload/category/".$json->imagen_url->name;               
+                }else{
+                    $image_url = null;
+                }
+
+                $new_category = $product_category->store($json->id, $json->nombre, $image_url); //datos del data (input en el .php)
            
                 $response = array(
                 'status' => 'ok',
@@ -299,9 +306,17 @@
 
                 $product = new ProductController();
                 $price = new PriceController();
-                $new_product = $product->store($json->id, $json->nombre, $json->categoria_id);
-                $new_product_id = $product->lastproduct();
-                $new_price = $price->store($new_product_id, $json->tipo_iva, $json->precio_base);
+
+                if(isset($json->imagen_url->name)){
+                    $imagen_url = "/upload/product/".$json->imagen_url->name;               
+                }else{
+                    $image_url = null;
+                }
+
+                $new_product_id = $product->store($json->id, $json->nombre, $json->categoria_id, $imagen_url);
+                $new_price = $price->store($new_product_id, $json->iva_id, $json->precio_base);
+                $new_product = $product->show($new_product_id);
+
                 $response = array(
                     'status' => 'ok',
                     'id' => $json->id, //la id no vale nada, value de .php es ""

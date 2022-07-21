@@ -31,6 +31,10 @@ class TicketController {
 		return $this->ticket->addProduct($price_id, $table_id);
 	}
 
+	public function addFakeProduct($price_id, $table_id, $timestamp){
+		return $this->ticket->addFakeProduct($price_id, $table_id, $timestamp);
+	}
+
 	public function deleteProduct($ticket_id){
 		return $this->ticket->deleteProduct($ticket_id);
 	}

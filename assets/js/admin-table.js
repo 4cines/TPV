@@ -83,8 +83,8 @@ export let renderAdminTable = () => {
                 .then(json => {
   
                     Object.entries(json.element).forEach(([key, value]) => {
-                        
-                        if(document.getElementsByName(key).length > 0){ // name del input del .php
+            
+                        if(document.getElementsByName(key).length > 0  && document.getElementsByName(key)[0].type != "file"){ // name del input del .php
                             document.getElementsByName(key)[0].value = value; // [0] para poder acceder a los valores. Es standar
                         }
                     });

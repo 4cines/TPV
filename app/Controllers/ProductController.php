@@ -28,8 +28,8 @@ class ProductController {
 		return $this->producto->index();
 	}
 
-	public function store($id, $nombre, $categoria_id){
-		return $this->producto->store($id, $nombre, $categoria_id);
+	public function store($id, $nombre, $categoria_id, $imagen_url){
+		return $this->producto->store($id, $nombre, $categoria_id, $imagen_url);
 	}
 
 	public function lastproduct(){

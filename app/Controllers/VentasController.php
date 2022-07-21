@@ -39,17 +39,25 @@ class VentasController {
 		return $this->ventas->chargeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number);
 	}
 
+	public function chargeFakeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number, $date, $time, $timestamp){
+		return $this->ventas->chargeFakeTicket($table_id, $metodo_pago, $totalPrice, $new_ticket_number, $date, $time, $timestamp);
+	}
+
 	public function newTicketNumber($last_ticket_number){
-		if(strpos(end($last_ticket_number), date('ymd')) !== false){
-				return end($last_ticket_number) + 1;
-			} else {
-				return date('ymd').'0001';
-			}
-		return $this->ventas-> newTicketNumber($last_ticket_number);
+		
+		if(!empty($last_ticket_number) && strpos(end($last_ticket_number), date('ymd')) !== false){
+			return end($last_ticket_number) + 1;
+		} else {
+			return date('ymd').'0001';
+		}
 	}	
 
 	public function timeservice($charge_ticket_id, $first_product){
 		return $this->ventas->timeservice($charge_ticket_id, $first_product);
+	}	
+
+	public function fakeTimeService($charge_ticket_id, $first_product, $timestamp){
+		return $this->ventas->fakeTimeService($charge_ticket_id, $first_product, $timestamp);
 	}	
 }	
 

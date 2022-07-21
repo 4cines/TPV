@@ -45,6 +45,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                    <th scope="col">Imagen</th>    
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Opciones</th>
                                     </tr>
@@ -53,6 +54,9 @@
                                     <?php foreach($categorias as $categoria): ?>
                                         <tr class="table-element" data-element="<?= $categoria['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
+                                            <th scope="row">
+                                                <img class="imagen_url" src="<?= $categoria['imagen_url'] ?>">
+                                            </th>
                                             <th scope="row" class="nombre">
                                                 <?= $categoria['nombre'] ?>
                                             </th>
@@ -67,6 +71,9 @@
                                         </tr>
                                     <?php endforeach; ?>
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
+                                        <th scope="row">
+                                            <img class="imagen_url" src="">
+                                        </th>
                                         <th scope="row" class="nombre"></th>
                                         <td class="opciones">
                                             <button type="button" class="edit-table-button btn btn-success" data-bs-toggle="modal" data-id="" data-route="showProductCategory" data-bs-target="#addArticle">
@@ -119,7 +126,12 @@
                 <div class="modal-body">
                     <form class="admin-form" data-route="storeProductCategory"> 
                          <!-- empieza el formulario, data, cuando se envia saber donde gestionar el formulario -> web.php-->
-                        <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
+                         <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
+                        <div class="mb-3">
+                            <label for="imagen_url" class="form-label">Foto del producto</label>
+                            <input type="file" class="form-control" name="imagen_url" value="">
+                        </div>
+                         <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Categoría </label>
                             <input type="nombre" class="form-control" name="nombre" value="">

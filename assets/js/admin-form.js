@@ -26,7 +26,27 @@ export let renderAdminForm = () => {
                 formData.append("route", adminForm.dataset.route); // = data["route"] = 'addProduct'; 
 
                 formData.forEach(function(value, key){ //transformamos el FormData a JSON 
-                    data[key] = value; // se le crea un bucle para que le adjudique una clave (campo bbdd) a cada valor (valor a introducir)
+
+                    if(value instanceof File && value.size > 0) {
+
+                        let file = {
+                            'lastMod'    : value.lastModified,
+                            'lastModDate': value.lastModifiedDate,
+                            'name'       : value.name,
+                            'size'       : value.size,
+                            'type'       : value.type,
+                        } 
+
+                        data[key] = file;
+
+                        fetch ('upload.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                    }
+                    else {
+                        data[key] = value; // se le crea un bucle para que le adjudique una clave (campo bbdd) a cada valor (valor a introducir)
+                    }
                 });
 
                 let response = await fetch('web.php', {
@@ -56,9 +76,15 @@ export let renderAdminForm = () => {
                         Object.entries(json.newElement).forEach(([key, value]) => { 
                             // json.newElement es el ultimo registro de la tabla $query
                             // json es un objeto
-                            if(newElement.querySelector("." + key)){ 
-                                newElement.querySelector("." + key).innerHTML = value;
-                            } // bucle para insertar los valores y claves que has añadido para que el js lo meta en el HTML
+                            if(newElement.querySelector("." + key)){
+
+                                if(newElement.querySelector("." + key).tagName == "IMG") {
+
+                                    newElement.querySelector("." + key).src = value;
+                                }else{
+                                    newElement.querySelector("." + key).innerHTML = value;
+                                }
+                            }// bucle para insertar los valores y claves que has añadido para que el js lo meta en el HTML
                         });
 
                         tableContainer.appendChild(newElement); // añadir dentro de la tabla lo clonado 
@@ -71,7 +97,13 @@ export let renderAdminForm = () => {
 
                         Object.entries(json.newElement).forEach(([key, value]) => {
                             if(element.querySelector("." + key)){
-                                element.querySelector("." + key).innerHTML = value;
+
+                                if(element.querySelector("." + key).tagName == "IMG") {
+
+                                    element.querySelector("." + key).src = value;
+                                }else{
+                                    element.querySelector("." + key).innerHTML = value;
+                                }
                             }
                         });
 

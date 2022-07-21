@@ -14,8 +14,13 @@ class PriceController {
 		$this->price= new Price();
 	}
 
-    public function store($new_product_id, $tipo_iva, $precio_base){
-		return $this->price->store($new_product_id, $tipo_iva, $precio_base);
+    public function store($new_product_id, $iva_id, $precio_base){
+
+		$isValid = $this->price->compararPrecio($new_product_id, $iva_id, $precio_base);
+
+		if(empty($isValid)){
+			return $this->price->store($new_product_id, $iva_id, $precio_base);
+		}
 	}
 
 	public function delete($id){

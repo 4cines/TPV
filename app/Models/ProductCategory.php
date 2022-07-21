@@ -11,7 +11,7 @@ class ProductCategory extends Connection
 	public function index()
 	{
 
-		$query =  "SELECT productos_categorias.id AS id, productos_categorias.nombre AS nombre, productos_categorias.imagen_url AS imagen_url FROM productos INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id WHERE productos_categorias.activo = 1 GROUP BY productos_categorias.id";
+		$query =  "SELECT productos_categorias.id AS id, productos_categorias.nombre AS nombre, productos_categorias.imagen_url, productos_categorias.imagen_url AS imagen_url FROM productos INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id WHERE productos_categorias.activo = 1 GROUP BY productos_categorias.id";
 				
 		$stmt = $this->pdo->prepare($query);
 		$result = $stmt->execute();
@@ -33,7 +33,7 @@ class ProductCategory extends Connection
 	public function filtro()
 	{
 
-		$query =  "SELECT id, nombre FROM  productos_categorias WHERE activo = 1";
+		$query =  "SELECT id, nombre, imagen_url FROM  productos_categorias WHERE activo = 1";
 				
 		$stmt = $this->pdo->prepare($query);
 		$result = $stmt->execute();
@@ -41,10 +41,10 @@ class ProductCategory extends Connection
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function store($id, $nombre){
+	public function store($id, $nombre, $image_url){
 
         if(empty($id)){
-            $query =  "INSERT INTO productos_categorias (nombre, activo, creado, actualizado) VALUES ('$nombre', 1, NOW(), NOW())";
+            $query =  "INSERT INTO productos_categorias (nombre, imagen_url, activo, creado, actualizado) VALUES ('$nombre', '$image_url', 1, NOW(), NOW())";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();
@@ -52,7 +52,7 @@ class ProductCategory extends Connection
             $query =  "SELECT * FROM productos_categorias WHERE id=".$this->pdo->lastInsertId();
 
         } else{
-            $query =  "UPDATE productos_categorias SET nombre = '$nombre', actualizado = NOW() WHERE id = $id";
+            $query =  "UPDATE productos_categorias SET nombre = '$nombre', imagen_url = '$image_url', actualizado = NOW() WHERE id = $id";
                     
             $stmt = $this->pdo->prepare($query);
             $result = $stmt->execute();

@@ -55,6 +55,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                    <th scope="col">Imagen</th> 
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Categoria </th>
                                     <th scope="col">Tipo IVA</th>
@@ -67,11 +68,14 @@
                                 <?php foreach($productos as $producto): ?>
                                         <tr class="table-element" data-element="<?= $producto['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
+                                            <th scope="row">
+                                                <img class="imagen_url" src="<?= $producto['imagen_url'] ?>">
+                                            </th>
                                             <th scope="row" class="nombre">
                                                 <?= $producto['nombre'] ?>
                                             </th>
-                                            <td class="categoria_id">
-                                                <?= $producto['categoria_id'] ?>
+                                            <td class="categoria">
+                                                <?= $producto['categoria'] ?>
                                             </td>
                                             <td class="tipo_iva">
                                                 <?= $producto['tipo_iva'] ?> %
@@ -93,8 +97,11 @@
                                         </tr>
                                     <?php endforeach; ?>
                                     <tr class="create-layout table-element d-none" data-element=""> <!--- Lista para clonar, lo hace invisible d-non que s equita en js con remove--->
+                                        <th scope="row">
+                                            <img class="imagen_url" src="">
+                                        </th>
                                         <th scope="row" class="nombre"></th>
-                                        <td class="categoria_id"></td>
+                                        <td class="categoria"></td>
                                         <td class="tipo_iva"></td>
                                         <td class="precio_base"></td>
                                         <td class="visible"></td>
@@ -151,12 +158,17 @@
                          <!-- empieza el formulario, data, cuando se envia saber donde gestionar el formulario -> web.php-->
                         <input type="hidden" name="id" value=""> <!-- hidden es valor escondido, si quiero crear value="", si quiero editar: value "..."--> 
                         <div class="mb-3">
+                            <label for="imagen_url" class="form-label">Foto del producto</label>
+                            <input type="file" class="form-control" name="imagen_url" value="">
+                        </div>
+                        <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre producto</label>
                             <input type="name" class="form-control" name="nombre" value="">
                         </div>
                         <div class="mb-3">
                             <label for="categoria_id" class="form-label">Categoría asociada</label>
-                            <select class="form-select" aria-label="Default select example" name="categoria_id">
+                            <select class="form-select" aria-label="Default select example" name="categoria_id"> 
+                            <!-- el valor de name debe coincidor con el valor del value (id-id, nombre-nombre). En este caso, name=categoria_id y value=categoria_id -->
                                 <option selected>Selecciona una opción</option>
                                 <?php foreach($categorias as $categoria):?>
                                 <option value="<?php echo $categoria['id']?>"><?php echo $categoria['nombre']?></option>
@@ -165,7 +177,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tipo_iva" class="form-label">Tipo IVA</label>
-                            <select class="form-select" aria-label="Default select example" name="tipo_iva">
+                            <select class="form-select" aria-label="Default select example" name="iva_id">
                                 <option selected>Selecciona una opción</option>
                                 <?php foreach($tiposiva as $tipoiva):?>
                                 <option value="<?php echo $tipoiva['id']?>"><?php echo $tipoiva['tipo']?></option>

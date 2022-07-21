@@ -65,6 +65,17 @@ class Ticket extends Connection
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function addFakeProduct($price_id, $table_id, $timestamp)
+    {
+
+        $query =  "INSERT INTO tickets (mesa_id, precio_id, activo, creado, actualizado) VALUES (".$table_id.",".$price_id.", 1, '$timestamp', '$timestamp')";
+
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+        
+    }
+
+
 	public function deleteProduct($ticket_id)
     {
 

@@ -104,3 +104,38 @@ body {
   background-color: #999;
 }
 
+.small-admin {
+  font-size: 1rem;
+  color: #555;
+  display:block;
+  margin-top:.6rem;
+}
+
+.table>thead {
+  background-color: #c9e7ff;
+}
+
+.table tr {
+  vertical-align: middle;
+  text-align: center;
+}
+.table tr .numero-mesa{
+  width: 30%;
+  text-align: center;
+}
+.table tr .uicacion{
+  width: 30%;
+  text-align: center;
+}
+.table tr .comensales{
+  width: 30%;
+  text-align: center;
+}
+.table tr .opciones{
+  width: 15%;
+  text-align: center;
+}
+
+.table tr img{
+  width: 5rem;
+}
