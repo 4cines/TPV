@@ -139,3 +139,20 @@ body {
 .table tr img{
   width: 5rem;
 }
+
+.export-sale-to-excel{
+  width: max-content;
+  margin-left: auto;
+}
+
+.export-sale-to-excel:hover{
+  cursor: pointer;
+}
+
+.export-sale-to-excel svg {
+  width: 2rem;
+}
+
+.export-sale-to-excel:hover svg path{
+  fill: rgb(3, 132, 5);
+}

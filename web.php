@@ -388,6 +388,19 @@
                 echo json_encode($response);
                 
                 break;
+
+            case 'exportSaleToExcel':
+
+                $sale = new VentasController();
+                $excel = $sale->exportSaleToExcel($json->sale_id);
+                
+                $response = array(
+                    'status' => 'ok',   
+                );
+
+                echo json_encode($response);
+                
+                break;    
         }
     }
 

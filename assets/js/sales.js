@@ -3,6 +3,43 @@ export let renderSales = () => {
     let chargeTickets = document.querySelectorAll(".charge-ticket");
     let ticketContainer = document.querySelector(".list-group");
     let totals = document.querySelector(".totals");
+    let exportSaleToExcel = document.querySelector(".export-sale-to-excel");
+
+    if(exportSaleToExcel) {
+
+        exportSaleToExcel.addEventListener("click", (event) => {
+                
+            let sendPostRequest = async () => {
+                
+                let data = {};  //JASON llamada al servidor enviando datos
+                data["route"] = 'exportSaleToExcel';
+                data["sale_id"] = exportSaleToExcel.dataset.sale;
+
+                let response = await fetch('web.php', {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                
+                    if (!response.ok) throw response;
+
+                    return response.json();
+                })
+                .then(json => {
+
+                
+                })
+                .catch ( error =>  {
+                    console.log(error);
+                });
+            };
+
+            sendPostRequest();
+        }); 
+    }
 
     chargeTickets.forEach(chargeTicket => {
 

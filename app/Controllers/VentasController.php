@@ -3,8 +3,11 @@
 namespace app\Controllers;
 
 require_once 'app/Models/Ventas.php';
+require_once 'app/Services/ExcelService.php';
 
 use app\Models\Ventas;
+use app\Services\ExcelService;
+
 
 class VentasController {
 
@@ -63,6 +66,17 @@ class VentasController {
 	public function getChartData($chart_data){
 		return $this->ventas->getChartData($chart_data);
 	}	
+
+	public function exportSaleToExcel($sale_id){
+
+		$excel_service = new ExcelService();
+
+		$sale = $this->ventas->numero($sale_id);
+
+		$products = $this->ventas->productos($sale_id);
+		
+		$excel_service->exportSaleToExcel($sale, $products);
+	}
 }	
 
 ?>

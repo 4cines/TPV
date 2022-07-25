@@ -24,7 +24,7 @@ class Ventas extends Connection
 
     public function numero($venta){
 		
-        $query =  "SELECT * FROM ventas 
+        $query =  "SELECT *, ventas.id AS id FROM ventas 
         INNER JOIN metodos_pagos ON ventas.metodo_pago_id = metodos_pagos.id 
         INNER JOIN mesas ON ventas.mesa_id = mesas.id 
         WHERE ventas.activo = 1 AND ventas.id = $venta";
