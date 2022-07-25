@@ -49,7 +49,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
             case 'deleteProduct':
                 
@@ -70,7 +70,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
             case 'deleteAllProducts':
             
@@ -86,7 +86,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
             case 'chargeTicket':
 
@@ -109,7 +109,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
              // MESAS
 
@@ -125,7 +125,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'showTable':
 
@@ -140,7 +140,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'deleteTable':
 
@@ -154,7 +154,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
          //// TIPOS IVA
 
@@ -171,7 +171,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'showTax':
 
@@ -185,7 +185,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'deleteTax':
 
@@ -199,7 +199,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
 
          // METODOS DE PAGO
 
@@ -216,7 +216,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
         
             case 'showPay':
 
@@ -230,7 +230,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
         
             case 'deletePay':
 
@@ -244,7 +244,7 @@
 
                 echo json_encode($response);
 
-            break;  
+                break;  
 
 
             //categorias
@@ -269,7 +269,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
         
             case 'showProductCategory':
 
@@ -283,7 +283,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
         
             case 'deleteProductCategory':
 
@@ -298,7 +298,7 @@
 
             echo json_encode($response);
 
-            break;  
+                break;  
 
             // PRODUCTOS
 
@@ -325,7 +325,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'showProduct':
 
@@ -339,7 +339,7 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
             
             case 'deleteProductPrice':
 
@@ -355,7 +355,39 @@
 
                 echo json_encode($response);
 
-            break;
+                break;
+
+                // ESTADISITCAS
+
+            case 'getSaleChartData':
+                
+                $sale = new VentasController();
+                $data = $sale->getChartData($json->chart_data);
+                
+                foreach($data as $value){
+                    $response['labels'][] = isset($value['labels']) ? $value['labels'] : null;
+                    $response['data'][] = isset($value['data']) ? $value['data'] : null;
+                    $response['quantity'][] = isset($value['quantity']) ? $value['quantity'] : null;
+                }
+
+                echo json_encode($response);
+                
+                break;
+
+            case 'getTicketChartData':
+
+                $ticket = new TicketController();
+                $data = $ticket->getChartData($json->chart_data);
+                
+                foreach($data as $value){
+                    $response['labels'][] = isset($value['labels']) ? $value['labels'] : null;
+                    $response['data'][] = isset($value['data']) ? $value['data'] : null;
+                    $response['quantity'][] = isset($value['quantity']) ? $value['quantity'] : null;
+                }
+
+                echo json_encode($response);
+                
+                break;
         }
     }
 

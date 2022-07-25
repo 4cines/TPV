@@ -48,10 +48,13 @@ class TicketController {
 	}
 
 	public function firstproduct($charge_ticket_id){
-
 		return $this->ticket->firstproduct($charge_ticket_id);
 	}
 		
+	public function getChartData($chart_data){		
+		return $this->ticket->getChartData($chart_data);
+	}
+
 }
 
 ?>

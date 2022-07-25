@@ -58,6 +58,10 @@ class VentasController {
 
 	public function fakeTimeService($charge_ticket_id, $first_product, $timestamp){
 		return $this->ventas->fakeTimeService($charge_ticket_id, $first_product, $timestamp);
+	}
+
+	public function getChartData($chart_data){
+		return $this->ventas->getChartData($chart_data);
 	}	
 }	
 

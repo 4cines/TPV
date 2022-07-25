@@ -119,5 +119,43 @@ class Ticket extends Connection
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getChartData($chart_data){
+
+        switch($chart_data) {
+            
+            case 'best_dishes':
+                $query = "SELECT COUNT(productos.nombre) AS producto, productos.nombre
+                FROM tickets 
+                INNER JOIN precios ON tickets.precio_id = precios.id
+                INNER JOIN productos ON precios.producto_id = productos.id
+                INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+                WHERE categoria_id = 1 OR categoria_id = 4
+                GROUP BY productos.nombre ORDER BY COUNT(productos.nombre) DESC"; 
+
+            case 'best_drinks':
+                $query = " SELECT COUNT(productos.nombre) AS producto, productos.nombre
+                FROM tickets 
+                INNER JOIN precios ON tickets.precio_id = precios.id
+                INNER JOIN productos ON precios.producto_id = productos.id
+                INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+                WHERE categoria_id = 1 OR categoria_id = 4
+                GROUP BY productos.nombre ORDER BY COUNT(productos.nombre) DESC";
+
+            case 'best_categories':
+                $query = "SELECT SUM(ventas.precio_total) AS data, productos_categorias.nombre AS labels
+                FROM ventas
+                INNER JOIN tickets ON ventas.id = tickets.venta_id
+                INNER JOIN precios ON tickets.precio_id = precios.id
+                INNER JOIN productos ON precios.producto_id = productos.id
+                INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+                GROUP BY productos_categorias.nombre ORDER BY SUM(ventas.precio_total) DESC";
+        }
+    
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

@@ -2,28 +2,98 @@ Realizar las siguientes consultas, entre paréntesis  se define qué alias se de
 
 - Cuantas ventas se han realizado (quantity) en cada franja de hora (labels) y cuanto dinero se ha ingresado (data)
 
-    SELECT HOUR(hora_emision) AS labels , COUNT(*) AS quantity, SUM(precio_total) AS data
+    "SELECT HOUR(hora_emision) AS labels , COUNT(*) AS quantity, SUM(precio_total) AS data
     FROM ventas
-    GROUP BY HOUR(hora_emision) ORDER BY HOUR(hora_emision) ASC
+    GROUP BY HOUR(hora_emision) ORDER BY HOUR(hora_emision) ASC";
 
 - Cuantas ventas se han realizado (quantity) en cada franja de día (labels) y cuanto dinero se ha ingresado (data)
 
+    "SELECT DAYNAME(fecha_emision) AS labels, COUNT(*) AS quantity , SUM(precio_total) AS data
+    FROM ventas GROUP BY DAYNAME(fecha_emision) 
+    ORDER BY FIELD(labels, 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')":
 
 - Cuantas ventas se han realizado (quantity) en cada franja de mes (labels) y cuanto dinero se ha ingresado (data)
 
+    "SELECT MONTHNAME(fecha_emision) AS labels, COUNT(*) AS quantity, SUM(precio_total) AS data
+    FROM ventas GROUP BY MONTHNAME(fecha_emision) 
+    ORDER BY FIELD(labels, 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 
+    'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre')";
 
 - Cuantas ventas se han realizado (quantity) en cada franja de año (labels) y cuanto dinero se ha ingresado (data)
 
+    "SELECT MONTHNAME(fecha_emision) AS labels, COUNT(*) AS quantity, SUM(precio_total) AS data
+    FROM ventas GROUP BY  MONTHNAME(fecha_emision) ORDER BY  MONTHNAME(fecha_emision)";
 
 - Cuantas ventas se han realizado (data) con cada método de pago (labels)
 
+    "SELECT SUM(precio_total) AS data, metodos_pagos.nombre AS labels
+    FROM ventas
+    INNER JOIN metodos_pagos ON ventas.metodo_pago_id = metodos_pagos.id
+    GROUP BY  metodos_pagos.nombre";
 
 - Qué categorías de productos (labels) aportan más ingresos (data)
 
+    "SELECT SUM(ventas.precio_total) AS data, productos_categorias.nombre AS labels
+    FROM ventas
+    INNER JOIN tickets ON ventas.id = tickets.venta_id
+    INNER JOIN precios ON tickets.precio_id = precios.id
+    INNER JOIN productos ON precios.producto_id = productos.id
+    INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+    GROUP BY productos_categorias.nombre ORDER BY SUM(ventas.precio_total) DESC";
 
 - Cuales son los productos que no son bebidas (labels) más vendidos (data)
 
+    "SELECT COUNT(productos.nombre) AS producto, productos.nombre
+    FROM tickets 
+    INNER JOIN precios ON tickets.precio_id = precios.id
+    INNER JOIN productos ON precios.producto_id = productos.id
+    INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+    WHERE categoria_id = 1 OR categoria_id = 4
+    GROUP BY productos.nombre ORDER BY COUNT(productos.nombre) DESC";
 
 - Cuales son los productos que son bebidas (labels) más vendidos (data)
 
-- Tiempo medio que se está en la mesa
+    "SELECT COUNT(productos.nombre) AS producto, productos.nombre
+    FROM tickets 
+    INNER JOIN precios ON tickets.precio_id = precios.id
+    INNER JOIN productos ON precios.producto_id = productos.id
+    INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+    WHERE categoria_id = 2 OR categoria_id = 3
+    GROUP BY productos.nombre ORDER BY COUNT(productos.nombre) DESC";
+
+- Media de ventas por día
+
+    "SELECT ROUND (AVG(precio_total), 2) AS data , DAYNAME(fecha_emision) AS labels 
+    FROM ventas GROUP BY DAYNAME(fecha_emision) ORDER BY FIELD(labels, 'Lunes', 'Martes', 
+    'Miércoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')";
+
+- Media de ventas por mes 
+    
+    "SELECT ROUND (AVG(precio_total), 2) AS data , MONTHNAME(fecha_emision) AS labels 
+    FROM ventas GROUP BY MONTHNAME(fecha_emision)ORDER BY FIELD(labels, 'Enero', 'Febrero', 
+    'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 
+    'Diciembre')";
+
+- Media de  ventas por año
+    
+    "SELECT ROUND (AVG(precio_total), 2) AS data , YEAR(fecha_emision) AS labels 
+    FROM ventas GROUP BY YEAR(fecha_emision) ORDER BY YEAR(fecha_emision)";
+
+- Productos relacionados en las ventas
+
+    "SELECT productos.nombre, COUNT(*) AS cantidad FROM tickets
+
+    INNER JOIN precios ON tickets.precio_id = precios.id
+    INNER JOIN productos ON precios.producto_id = productos.id
+
+    WHERE tickets.venta_id IN (SELECT tickets.venta_id FROM tickets
+    INNER JOIN precios ON tickets.precio_id = precios.id
+    WHERE tickets.precio_id IN (10, 3, 11, 5)
+    AND tickets.venta_id IS NOT NUll
+    GROUP BY tickets.venta_id
+    HAVING COUNT(DISTINCT(tickets.precio_id)) = 4)
+
+    AND tickets.precio_id NOT IN (10, 3, 11, 5)
+
+    GROUP BY productos.id
+    ORDER BY cantidad desc";
