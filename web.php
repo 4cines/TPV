@@ -401,6 +401,74 @@
                 echo json_encode($response);
                 
                 break;    
+
+            case 'exportAllProductsToExcel':
+
+                $products = new ProductController();
+                $excel = $products->exportAllProductsToExcel();
+                
+                $response = array(
+                    'status' => 'ok',   
+                );
+
+                echo json_encode($response);
+                
+                break; 
+                
+            case 'exportAllSalesToExcel':
+    
+                $venta = new VentasController();
+                $excel = $venta->exportAllSalesToExcel();
+                
+                $response = array(
+                    'status' => 'ok',   
+                );
+
+                echo json_encode($response);
+                
+                break; 
+
+            case 'showSale':
+
+                $sales = new VentasController();
+
+                $sale = $sales->numero($json->id);
+                $products = $sales->productos($json->id);
+                $html = "";
+    
+                foreach($products as $product){
+    
+                    $html .= '<tr>
+                        <td class="text-center"><img class="img-ticket" src="'.$product['imagen_url'].'"></td>
+                        <td class="text-center">'.$product['nombre'].'</td>
+                        <td class="text-center">'.$product['precio_base'] .'</td>
+                        <td class="text-center">'.$product['cantidad'] .'</td>
+                    </tr>';
+                }
+    
+                $sale['products'] = $html;
+    
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $sale,
+                );
+    
+                echo json_encode($response);            
+    
+            break;
+
+            case 'exportSaleToPdf':
+
+                $sale = new VentasController();
+                $sale->exportSaleToPdf($json->sale_id);
+                
+                $response = array(
+                    'status' => 'ok',   
+                );
+
+                echo json_encode($response);
+                
+                break;
         }
     }
 

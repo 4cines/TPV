@@ -11,8 +11,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 
 class ExcelService {
 
-	public function exportSaleToExcel($sale, $products)
-    {
+	public function exportSaleToExcel($sale, $products){
 
         $spreedsheet = IOFactory::load($_SERVER["DOCUMENT_ROOT"] .'/excel/templates/ticket.xls');
         $spreedsheet->setActiveSheetIndex(0);
@@ -38,13 +37,67 @@ class ExcelService {
         return $excel_file;
 	}
 
-    public function exportExcelToPdf($excel_file, $filename)
-    {
+    public function exportExcelToPdf($excel_file, $filename){
         $pdf = new Dompdf($excel_file);
         $pdf_file = $pdf->save($filename.".pdf");
 
         return $pdf_file;
     }
+
+    public function exportTableToExcel($table, $products){
+
+        $spreedsheet = IOFactory::load($_SERVER["DOCUMENT_ROOT"] .'/excel/templates/table.xls');
+        $spreedsheet->setActiveSheetIndex(0);
+
+        $letter = 'A';
+
+        foreach($products[0] as $key => $value){
+            $spreedsheet->getActiveSheet()->setCellValue(strtoupper($letter) . '1', $key);
+            ++$letter;
+        }
+
+        for($i = 0; $i < count($products); $i++){
+           
+            $spreedsheet->getActiveSheet()->insertNewRowBefore(2 + $i, 1);
+            $letter = 'A';
+
+            foreach ($products[$i] as $key => $value) {
+                $spreedsheet->getActiveSheet()->setCellValue($letter . ($i + 2), $products[$i][$key]);
+                ++$letter;
+            }
+        }
+
+        $writer = new Xlsx($spreedsheet);        
+        $excel_file = $writer->save($_SERVER["DOCUMENT_ROOT"] . '/excel/tables/table-'.$table.'.xls');
+    }
+
+    public function exportSalesTableToExcel($table, $sale){
+
+        $spreedsheet = IOFactory::load($_SERVER["DOCUMENT_ROOT"] .'/excel/templates/table.xls');
+        $spreedsheet->setActiveSheetIndex(0);
+
+        $letter = 'A';
+
+        foreach($sale[0] as $key => $value){
+            $spreedsheet->getActiveSheet()->setCellValue(strtoupper($letter) . '1', $key);
+            ++$letter;
+        }
+
+        for($i = 0; $i < count($sale); $i++){
+           
+            $spreedsheet->getActiveSheet()->insertNewRowBefore(2 + $i, 1);
+            $letter = 'A';
+
+            foreach ($sale[$i] as $key => $value) {
+                $spreedsheet->getActiveSheet()->setCellValue($letter . ($i + 2), $sale[$i][$key]);
+                ++$letter;
+            }
+        }
+
+        $writer = new Xlsx($spreedsheet);        
+        $excel_file = $writer->save($_SERVER["DOCUMENT_ROOT"] . '/excel/tables/table-'.$table.'.xls');
+    }
+
 }
 
 ?>

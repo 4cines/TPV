@@ -140,19 +140,58 @@ body {
   width: 5rem;
 }
 
-.export-sale-to-excel{
+.excel_button{
   width: max-content;
   margin-left: auto;
 }
 
-.export-sale-to-excel:hover{
+.excel_button:hover{
   cursor: pointer;
 }
 
-.export-sale-to-excel svg {
+.excel_button svg {
   width: 2rem;
 }
 
-.export-sale-to-excel:hover svg path{
+.excel_button:hover svg path{
   fill: rgb(3, 132, 5);
+}
+
+.sale-icons{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.excel-icon{
+  margin: 0 .5rem;
+  width: max-content;
+}
+
+.excel-icon:hover{
+  cursor: pointer;
+}
+
+.excel-icon svg {
+  width: 2rem;
+}
+
+.excel-icon:hover svg path{
+  fill: rgb(3, 132, 5);
+}
+
+.pdf-icon{
+  margin: 0 .5rem;
+  width: max-content;
+}
+
+.pdf-icon:hover{
+  cursor: pointer;
+}
+
+.pdf-icon svg {
+  width: 2rem;
+}
+
+.pdf-icon:hover svg path{
+  fill: rgb(210, 13, 13);
 }

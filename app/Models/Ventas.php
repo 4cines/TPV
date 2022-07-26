@@ -24,15 +24,28 @@ class Ventas extends Connection
 
     public function numero($venta){
 		
-        $query =  "SELECT *, ventas.id AS id FROM ventas 
-        INNER JOIN metodos_pagos ON ventas.metodo_pago_id = metodos_pagos.id 
-        INNER JOIN mesas ON ventas.mesa_id = mesas.id 
-        WHERE ventas.activo = 1 AND ventas.id = $venta";
+        $query =  "SELECT ventas.id, ventas.numero_ticket AS numero_ticket, ventas.precio_total_base AS precio_total_base, ventas.precio_total_iva AS precio_total_iva, ventas.precio_total AS precio_total, metodos_pagos.nombre AS metodo_pago, mesas.numero AS mesa, ventas.tiempo_servicio AS tiempo_servicio, ventas.fecha_emision AS fecha_emision, ventas.hora_emision AS hora_emision
+        FROM ventas 
+                INNER JOIN metodos_pagos ON ventas.metodo_pago_id = metodos_pagos.id 
+                INNER JOIN mesas ON ventas.mesa_id = mesas.id 
+                WHERE ventas.activo = 1 AND ventas.id = $venta";
                 
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+    public function allsales(){
+		
+        $query =  "SELECT ventas.id AS id, ventas.numero_ticket AS numero_ticket, ventas.precio_total AS precio_total, metodos_pagos.nombre AS metodo_pago, mesas.numero AS mesa FROM ventas
+        INNER JOIN metodos_pagos ON ventas.metodo_pago_id = metodos_pagos.id
+        INNER JOIN mesas ON ventas.mesa_id = mesas.id WHERE ventas.activo = 1";
+                
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
     public function productos($venta){

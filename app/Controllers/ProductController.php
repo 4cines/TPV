@@ -3,8 +3,10 @@
 namespace app\Controllers;
 
 require_once 'app/Models/Product.php';
+require_once 'app/Services/ExcelService.php';
 
 use app\Models\Product;
+use app\Services\ExcelService;
 
 class ProductController {
 
@@ -42,6 +44,15 @@ class ProductController {
 
 	public function delete($id){
 		return $this->producto->delete($id);
+	}
+
+	public function exportAllProductsToExcel(){
+
+		$excel_service = new ExcelService();
+
+		$products = $this->producto->index();
+		
+		$excel_service->exportTableToExcel('productos', $products);
 	}
 }
 

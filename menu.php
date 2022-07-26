@@ -19,6 +19,11 @@
 				</a>
 			</div>
 			<div class="col-12 gy-4">
+				<a class="btn btn-primary w-100 py-1 px-2 shadow-sm option-system option-system-menu rounded-0" role="button" href="mesas.php?panel=1">
+					<h2 class="mb-0"><i class="fa fa-th" aria-hidden="true"></i> Ventas</h2>
+				</a>
+			</div>
+			<div class="col-12 gy-4">
 				<a class="btn btn-secondary g-4 w-100 py-1 px-2 shadow-sm option-system option-system-menu rounded-0" role="button" href="">
 					<h2 class="mb-0"><i class="fa fa-truck" aria-hidden="true"></i> Proveedores</h2>
 				</a>
@@ -60,6 +65,7 @@
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a class="dropdown-item" href="admin-mesas.php?panel=2">Mesas</a></li>
+								<li><a class="dropdown-item" href="admin-ventas.php?panel=2">Ventas</a></li>
 								<li><a class="dropdown-item" href="admin-categorias.php?panel=2">Categorías</a></li>
 								<li><a class="dropdown-item" href="admin-productos.php?panel=2">Productos</a></li>
 								<li><a class="dropdown-item" href="admin-tiposiva.php?panel=2">Tipos de IVA</a></li>

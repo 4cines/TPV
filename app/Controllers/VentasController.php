@@ -4,9 +4,11 @@ namespace app\Controllers;
 
 require_once 'app/Models/Ventas.php';
 require_once 'app/Services/ExcelService.php';
+require_once 'app/Services/PdfService.php';
 
 use app\Models\Ventas;
 use app\Services\ExcelService;
+use app\Services\PdfService;
 
 
 class VentasController {
@@ -24,6 +26,10 @@ class VentasController {
 
     public function numero($venta){
 		return $this->ventas->numero($venta);
+	}
+
+	public function allsales(){
+		return $this->ventas->allsales();
 	}
 
     public function productos($venta){
@@ -76,6 +82,62 @@ class VentasController {
 		$products = $this->ventas->productos($sale_id);
 		
 		$excel_service->exportSaleToExcel($sale, $products);
+	}
+
+	public function exportAllSalesToExcel(){
+
+		$excel_service = new ExcelService();
+
+		$sale = $this->ventas->allsales();
+		
+		$excel_service->exportSalesTableToExcel('ventas', $sale);
+	}
+
+	public function exportSaleToPdf($sale_id){
+
+		$sale = $this->ventas->numero($sale_id);
+		$products = $this->ventas->productos($sale_id);
+
+		$html =
+            '<html>
+				<head>
+					<link type="text/css" href="localhost/exampls/style.css" rel="stylesheet" />
+				</head>
+                <body>'.
+                '<h1>Ticket de venta</h1>'.
+                '<p>Numero de ticket: '.$sale['numero_ticket'].'</p>'.
+                '<p>Fecha: '.$sale['fecha_emision'].'</p>'.
+                '<p>Mesa: '.$sale['mesa'].'</p>'.
+
+        $html .= 
+            '<table>
+                <tr>
+                    <th>Cant</th>
+                    <th>Descripción</th>
+                    <th>Total</th>
+                </tr>';
+
+        foreach($products as $product){
+            $html .=
+            '<tr>
+              <td>'.$product['cantidad'].'</td>
+              <td>'.$product['nombre'].'</td>
+              <td>'.$product['precio_base'].'</td>
+            </tr>';
+        }
+
+        $html .=
+			'</table>'.
+			'<p>Base: '.$sale['precio_total_base'].'</p>'.
+			'<p>IVA: '.$sale['precio_total_iva'].'</p>'.
+			'<p>Total: '.$sale['precio_total'].'</p>'.
+			'<p>Forma de pago: '.$sale['metodo_pago'].'</p>';
+			'</body></html>';
+		
+		$pdf_service = new PdfService();
+		$pdf = $pdf_service->exportToPdf($html);
+
+		file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/pdf/tickets/ticket-'.$sale['numero_ticket'].'.pdf', $pdf);
 	}
 }	
 

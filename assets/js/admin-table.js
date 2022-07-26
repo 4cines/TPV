@@ -3,6 +3,8 @@ export let renderAdminTable = () => {
     let deleteTableButtons = document.querySelectorAll('.delete-table-button');
     let deleteTableModal = document.querySelector('.delete-table-modal');
     let editButtons = document.querySelectorAll('.edit-table-button');
+    let exportAllProductsToExcel = document.querySelector(".export-allproducts-to-excel");
+    let exportAllSalesToExcel = document.querySelector(".export-allsales-to-excel");
 
     document.addEventListener("renderAdminTable",( event =>{
         renderAdminTable();
@@ -87,6 +89,9 @@ export let renderAdminTable = () => {
                         if(document.getElementsByName(key).length > 0  && document.getElementsByName(key)[0].type != "file"){ // name del input del .php
                             document.getElementsByName(key)[0].value = value; // [0] para poder acceder a los valores. Es standar
                         }
+                        else if (document.getElementById(key)){
+                            document.getElementById(key).innerHTML = value;
+                        }
                     });
                 })
                 .catch ( error =>  {
@@ -98,4 +103,76 @@ export let renderAdminTable = () => {
             
         }); 
     });
+
+    if(exportAllProductsToExcel) {
+
+        exportAllProductsToExcel.addEventListener("click", (event) => {
+                
+            let sendPostRequest = async () => {
+                
+                let data = {};  //JASON llamada al servidor enviando datos
+                data["route"] = exportAllProductsToExcel.dataset.route;
+
+                let response = await fetch('web.php', {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                
+                    if (!response.ok) throw response;
+
+                    return response.json();
+                })
+                .then(json => {
+
+                
+                })
+                .catch ( error =>  {
+                    console.log(error);
+                });
+            };
+
+            sendPostRequest();
+        }); 
+    }
+
+    if(exportAllSalesToExcel) {
+
+        exportAllSalesToExcel.addEventListener("click", (event) => {
+                
+            let sendPostRequest = async () => {
+                
+                let data = {};  //JASON llamada al servidor enviando datos
+                data["route"] = exportAllSalesToExcel.dataset.route;
+
+                let response = await fetch('web.php', {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                
+                    if (!response.ok) throw response;
+
+                    return response.json();
+                })
+                .then(json => {
+
+                
+                })
+                .catch ( error =>  {
+                    console.log(error);
+                });
+            };
+
+            sendPostRequest();
+        }); 
+    }
+
+
 };
