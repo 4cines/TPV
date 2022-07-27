@@ -13,6 +13,7 @@ class PdfService {
         
         $dompdf = new DOMPDF();
         $dompdf->setPaper('A7', 'portrait');
+        $dompdf->set_option('defaultFont', 'Courier');
         $dompdf->load_html($html);
         $dompdf->render();
         $output = $dompdf->output();

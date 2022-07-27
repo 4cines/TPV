@@ -101,13 +101,17 @@ class VentasController {
 		$html =
             '<html>
 				<head>
-					<link type="text/css" href="localhost/exampls/style.css" rel="stylesheet" />
+					<link rel="stylesheet" href="'.$_SERVER["DOCUMENT_ROOT"].'/assets/css/ticket.css">
 				</head>
                 <body>'.
-                '<h1>Ticket de venta</h1>'.
-                '<p>Numero de ticket: '.$sale['numero_ticket'].'</p>'.
-                '<p>Fecha: '.$sale['fecha_emision'].'</p>'.
-                '<p>Mesa: '.$sale['mesa'].'</p>'.
+				'<p style="font-size: 20px;" align="center"; "line-height:50%">Restaurantes Paquita</p>'.
+				'<p style="font-size: 10px;" align="center";>Adress: Lorem Ipsum, 23-10</p>'.
+				'<p style="font-size: 10px;" line-height:"20%" align="center">Tel: 666 000 555</p>'.
+				'<p align="center">*************************</p>'.
+                '<h1 style="font-size: 20px;" align="center">TICKET VENTA</h1>'.
+                '<p style="font-size: 10px;">Numero de ticket: '.$sale['numero_ticket'].'</p>'.
+                '<p style="font-size: 10px;">Fecha: '.$sale['fecha_emision'].'</p>'.
+                '<p style="font-size: 10px;">Mesa: '.$sale['mesa'].'</p>'.
 
         $html .= 
             '<table>
@@ -120,18 +124,17 @@ class VentasController {
         foreach($products as $product){
             $html .=
             '<tr>
-              <td>'.$product['cantidad'].'</td>
-              <td>'.$product['nombre'].'</td>
-              <td>'.$product['precio_base'].'</td>
+              <td style="font-size: 15px;">'.$product['cantidad'].'</td>
+              <td style="font-size: 15px;">'.$product['nombre'].'</td>
+              <td style="font-size: 15px;">'.$product['precio_base'].'</td>
             </tr>';
         }
 
         $html .=
 			'</table>'.
-			'<p>Base: '.$sale['precio_total_base'].'</p>'.
-			'<p>IVA: '.$sale['precio_total_iva'].'</p>'.
-			'<p>Total: '.$sale['precio_total'].'</p>'.
-			'<p>Forma de pago: '.$sale['metodo_pago'].'</p>';
+			'<p style="font-size: 10px;" align="right">Base: '.$sale['precio_total_base'].' €</p>'.
+			'<p style="font-size: 10px;" align="right">IVA: '.$sale['precio_total_iva'].' €</p>'.
+			'<p style="font-size: 18px;" align="right">Total: '.$sale['precio_total'].' €</p>'.
 			'</body></html>';
 		
 		$pdf_service = new PdfService();

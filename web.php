@@ -8,6 +8,8 @@
     require_once 'app/Controllers/ProductCategoryController.php';
     require_once 'app/Controllers/ProductController.php';
     require_once 'app/Controllers/PriceController.php';
+    require_once 'app/Controllers/EmpresasController.php';
+    require_once 'app/Controllers/SucursalesController.php';
   
     use app\Controllers\TicketController;
     use app\Controllers\TableController;
@@ -17,7 +19,8 @@
     use app\Controllers\ProductCategoryController;
     use app\Controllers\ProductController;
     use app\Controllers\PriceController;
-    
+    use app\Controllers\EmpresasController;
+    use app\Controllers\SucursalesController;
 
 
     header("Content-Type: application/json"); // lo que va a recibir es un JSON
@@ -469,6 +472,95 @@
                 echo json_encode($response);
                 
                 break;
+
+                ///EMPRESA
+
+                // case 'storeEmpresa':
+
+                //     $empresa = new EmpresasController();
+                //     $empresas = $empresa->store($json); //datos del data (input en el .php)
+               
+                //     $response = array(
+                //     'status' => 'ok',
+                //     'id' => $json->id, //la id no vale nada, value de .php es ""
+                //     'newElement' => $empresas // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                //     );
+    
+                //     echo json_encode($response);
+    
+                //     break;
+            
+                // case 'showEmpresa':
+    
+                //     $empresa = new EmpresasController();
+                //     $empresas = $empresa->show($json->id);
+    
+                //     $response = array(
+                //         'status' => 'ok',
+                //         'element' => $empresas,
+                //     );
+    
+                //     echo json_encode($response);
+    
+                //     break;
+            
+                // case 'deleteEmpresa':
+    
+                //     $empresa = new EmpresasController();
+                //     $empresa->delete($json->id);
+    
+                //     $response = array(
+                //         'status' => 'ok',
+                //         'id' => $json->id
+                //     );
+    
+                //     echo json_encode($response);
+    
+                //     break;  
+
+            // SUCURSAL
+            case 'storeSucursales':
+
+                $sucursal = new SucursalesController();
+                $sucursales = $sucursal->store($json); //datos del data (input en el .php)
+           
+                $response = array(
+                'status' => 'ok',
+                'id' => $json->id, //la id no vale nada, value de .php es ""
+                'newElement' => $sucursales // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                );
+
+                echo json_encode($response);
+
+                break;
+        
+            case 'showSucursales':
+
+                $sucursal = new SucursalesController();
+                $sucursales = $sucursal->show($json->id);
+
+                $response = array(
+                    'status' => 'ok',
+                    'element' => $sucursales,
+                );
+
+                echo json_encode($response);
+
+                break;
+        
+            case 'deleteSucursales':
+                $sucursal = new SucursalesController();
+                $sucursal->delete($json->id);
+
+
+                $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id
+                );
+
+                echo json_encode($response);
+
+                break;  
         }
     }
 
