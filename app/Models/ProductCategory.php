@@ -19,6 +19,7 @@ class ProductCategory extends Connection
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+
 	public function todaslascategorias()
 	{
 

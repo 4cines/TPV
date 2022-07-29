@@ -475,48 +475,48 @@
 
                 ///EMPRESA
 
-                // case 'storeEmpresa':
+                case 'storeEmpresa':
 
-                //     $empresa = new EmpresasController();
-                //     $empresas = $empresa->store($json); //datos del data (input en el .php)
+                    $empresa = new EmpresasController();
+                    $empresas = $empresa->store($json); //datos del data (input en el .php)
                
-                //     $response = array(
-                //     'status' => 'ok',
-                //     'id' => $json->id, //la id no vale nada, value de .php es ""
-                //     'newElement' => $empresas // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
-                //     );
+                    $response = array(
+                    'status' => 'ok',
+                    'id' => $json->id, //la id no vale nada, value de .php es ""
+                    'newElement' => $empresas // newElement no se modifica, se modifica la variable asociada (new_producto, new_categoria)
+                    );
     
-                //     echo json_encode($response);
+                    echo json_encode($response);
     
-                //     break;
+                    break;
             
-                // case 'showEmpresa':
+                case 'showEmpresa':
     
-                //     $empresa = new EmpresasController();
-                //     $empresas = $empresa->show($json->id);
+                    $empresa = new EmpresasController();
+                    $empresas = $empresa->show($json->id);
     
-                //     $response = array(
-                //         'status' => 'ok',
-                //         'element' => $empresas,
-                //     );
+                    $response = array(
+                        'status' => 'ok',
+                        'element' => $empresas,
+                    );
     
-                //     echo json_encode($response);
+                    echo json_encode($response);
     
-                //     break;
+                    break;
             
-                // case 'deleteEmpresa':
+                case 'deleteEmpresa':
     
-                //     $empresa = new EmpresasController();
-                //     $empresa->delete($json->id);
+                    $empresa = new EmpresasController();
+                    $empresa->delete($json->id);
     
-                //     $response = array(
-                //         'status' => 'ok',
-                //         'id' => $json->id
-                //     );
+                    $response = array(
+                        'status' => 'ok',
+                        'id' => $json->id
+                    );
     
-                //     echo json_encode($response);
+                    echo json_encode($response);
     
-                //     break;  
+                    break;  
 
             // SUCURSAL
             case 'storeSucursales':

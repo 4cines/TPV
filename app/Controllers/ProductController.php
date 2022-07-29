@@ -22,12 +22,28 @@ class ProductController {
 		return $this->producto->indexbycategory($categoria);
 	}
 
+	public function indexfiltro($filtro_categoria)
+	{
+
+		$query= "SELECT * FROM productos WHERE categoria_id = $filtro_categoria";
+
+		$stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
 	public function nombre($categoria){
 		return $this->producto->nombre($categoria);
 	}
 
 	public function index(){
 		return $this->producto->index();
+	}
+
+	public function filtro($filtro_categoria, $visible){
+		return $this->producto->filtro($filtro_categoria, $visible);
 	}
 
 	public function store($id, $nombre, $categoria_id, $imagen_url){

@@ -21,7 +21,8 @@ class Empresas extends Connection
         public function store($json){
 
                 if(empty($json->id)){
-                    $query =  "INSERT INTO empresas (razon_social, nombre_comercial, cif, domicilio, telefono, correo_electronico, web, activo, creado, actualizado) VALUES ('$json->razon_social','$json->nombre_comercial', '$json->cif', '$json->domicilio', $json->telefono, '$json->correo_electronico', '$json->web', 1, NOW(), NOW())";
+                    $query =  "INSERT INTO empresas (razon_social, nombre_comercial, cif, domicilio, telefono, correo_electronico, web, activo, creado, actualizado) 
+                    VALUES ('$json->razon_social','$json->nombre_comercial', '$json->cif', '$json->domicilio', $json->telefono, '$json->correo_electronico', '$json->web', 1, NOW(), NOW())";
                             
                     $stmt = $this->pdo->prepare($query);
                     $result = $stmt->execute();

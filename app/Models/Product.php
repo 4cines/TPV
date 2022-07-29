@@ -10,8 +10,36 @@ class Product extends Connection
 {
 	public function indexbycategory($categoria){
         
-        $query =  "SELECT productos.nombre, productos.imagen_url, precios.id AS precio_id FROM productos INNER JOIN precios ON precios.producto_id = productos.id WHERE productos.activo= 1 AND categoria_id = $categoria AND precios.vigente = 1 ";
+        $query =  "SELECT productos.id AS id ,productos.nombre, productos.imagen_url, precios.id AS precio_id , productos_categorias.nombre AS categoria, iva.tipo AS tipo_iva, precios.precio_base AS precio_base, productos.visible AS visible
+        FROM productos 
+        INNER JOIN precios ON precios.producto_id = productos.id 
+        INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+        INNER JOIN iva ON precios.iva_id = iva.id
+        WHERE productos.activo= 1 AND categoria_id = $categoria AND precios.vigente = 1 ";
                 
+        $stmt = $this->pdo->prepare($query);
+        $result = $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+    public function filtro($filtro_categoria, $visible){
+        
+        $query =  "SELECT productos.id AS id ,productos.nombre, productos.imagen_url, precios.id AS precio_id , productos_categorias.nombre AS categoria, iva.tipo AS tipo_iva, precios.precio_base AS precio_base, productos.visible AS visible
+        FROM productos 
+        INNER JOIN precios ON precios.producto_id = productos.id 
+        INNER JOIN productos_categorias ON productos.categoria_id = productos_categorias.id
+        INNER JOIN iva ON precios.iva_id = iva.id
+        WHERE productos.activo= 1";
+
+        if(!empty($filtro_categoria)){
+            $query. "AND productos.categoria_id = $filtro_categoria";
+        }if($visible == "false"){
+            $query. "AND precios.vigente = 0";
+        }else($visible == "true"){
+            $query. "AND precios.vigente = 1"
+        };
+
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute();
 

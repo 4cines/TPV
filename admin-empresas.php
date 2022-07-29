@@ -59,8 +59,8 @@
                                     <?php foreach($empresas as $empresa): ?>
                                         <tr class="table-element" data-element="<?= $empresa['id'] ?>">
                                         <!-- class y [...] tienen el mismo nombre-->
-                                            <th scope="row">
-                                                <img class="razon_social" src="<?= $empresa['razon_social'] ?>">
+                                            <th scope="row" class="razon_social">
+                                                <?= $empresa['razon_social'] ?>
                                             </th>
                                             <th scope="row" class="nombre_comercial">
                                                 <?= $empresa['nombre_comercial'] ?>
